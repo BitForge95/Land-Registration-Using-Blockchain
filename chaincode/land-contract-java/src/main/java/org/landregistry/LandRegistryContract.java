@@ -177,9 +177,9 @@ public final class LandRegistryContract implements ContractInterface {
     }
 
     // Helper method to validate that a string is neither null nor blank.
-        private boolean isNullOrBlank(final String value) {
+    private boolean isNullOrBlank(final String value) {
         return value == null || value.trim().isEmpty();
-     }
+    }
 
     /**
      * Splits an existing land parcel into two new child parcels (Mutation).
@@ -209,10 +209,16 @@ public final class LandRegistryContract implements ContractInterface {
                  || isNullOrBlank(newDocumentHash)) {
              throw new ChaincodeException(
                      "Mutation Rejected: Input parameters must not be null or empty",
-                    LandRegistryErrors.INVALID_INPUT.toString());
+                     LandRegistryErrors.INVALID_INPUT.toString());
          }
+
+         // Normalize ULPINs to ensure consistent world-state keys and comparisons
+         final String normalizedParentUlpin = parentUlpin != null ? parentUlpin.trim() : null;
+         final String normalizedChild1Ulpin = child1Ulpin != null ? child1Ulpin.trim() : null;
+         final String normalizedChild2Ulpin = child2Ulpin != null ? child2Ulpin.trim() : null;
+
         // 1. Fetch and Validate Parent Asset
-        String parentJson = ctx.getStub().getStringState(parentUlpin);
+        String parentJson = ctx.getStub().getStringState(normalizedParentUlpin);
         if (parentJson == null || parentJson.isEmpty()) {
             throw new ChaincodeException("Mutation Rejected: Parent Land Asset does not exist", 
                                          LandRegistryErrors.ASSET_NOT_FOUND.toString());
@@ -230,7 +236,9 @@ public final class LandRegistryContract implements ContractInterface {
         }
 
                 // Safety Check: Ensure all ULPINs involved in mutation are distinct
-         if (parentUlpin.equals(child1Ulpin) || parentUlpin.equals(child2Ulpin) || child1Ulpin.equals(child2Ulpin)) {
+         if (normalizedParentUlpin.equals(normalizedChild1Ulpin)
+                 || normalizedParentUlpin.equals(normalizedChild2Ulpin)
+                 || normalizedChild1Ulpin.equals(normalizedChild2Ulpin)) {
              throw new ChaincodeException("Mutation Rejected: Parent and child ULPINs must all be distinct",
                                           LandRegistryErrors.INVALID_INPUT.toString());
          }
@@ -244,7 +252,7 @@ public final class LandRegistryContract implements ContractInterface {
 
 
         // Safety Check: Ensure new ULPINs don't clash with existing ones
-        if (assetExists(ctx, child1Ulpin) || assetExists(ctx, child2Ulpin)) {
+        if (assetExists(ctx, normalizedChild1Ulpin) || assetExists(ctx, normalizedChild2Ulpin)) {
             throw new ChaincodeException("Mutation Rejected: One or both child ULPINs already exist", 
                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
         }
@@ -282,14 +290,16 @@ public final class LandRegistryContract implements ContractInterface {
      */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public LandAsset queryLandByUlpin(final Context ctx, final String ulpin) {
-          if (ulpin == null || ulpin.trim().isEmpty()) {
-             throw new ChaincodeException(
-                     "Invalid ulpin: value must be non-null and non-blank",
-                     LandRegistryErrors.INVALID_INPUT.toString());
-         }
-        String landJson = ctx.getStub().getStringState(ulpin);
+        if (ulpin == null || ulpin.trim().isEmpty()) {
+            throw new ChaincodeException(
+                    "Invalid ulpin: value must be non-null and non-blank",
+                    LandRegistryErrors.INVALID_INPUT.toString());
+        }
+        // Normalize ULPIN once and use the trimmed value for state lookup and error messages
+        String normalizedUlpin = ulpin.trim();
+        String landJson = ctx.getStub().getStringState(normalizedUlpin);
         if (landJson == null || landJson.isEmpty()) {
-            throw new ChaincodeException("Land Asset " + ulpin + " does not exist",
+            throw new ChaincodeException("Land Asset " + normalizedUlpin + " does not exist",
                                          LandRegistryErrors.ASSET_NOT_FOUND.toString());
         }
         return genson.deserialize(landJson, LandAsset.class);
@@ -311,14 +321,21 @@ public final class LandRegistryContract implements ContractInterface {
      */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String queryLandByOwner(final Context ctx, final String ownerId) {
-         if (ownerId == null || ownerId.trim().isEmpty()) {
+         if (ownerId == null) {
+             throw new ChaincodeException(
+                     "Invalid ownerId: value must be non-null and non-blank",
+                     LandRegistryErrors.INVALID_INPUT.toString());
+         }
+
+         String normalizedOwnerId = ownerId.trim();
+         if (normalizedOwnerId.isEmpty()) {
              throw new ChaincodeException(
                      "Invalid ownerId: value must be non-null and non-blank",
                      LandRegistryErrors.INVALID_INPUT.toString());
          }
 
          Map<String, Object> selector = new HashMap<>();
-         selector.put("currentOwnerId", ownerId);
+         selector.put("currentOwnerId", normalizedOwnerId);
          Map<String, Object> query = new HashMap<>();
          query.put("selector", selector);
          String queryString = genson.serialize(query);
@@ -337,8 +354,8 @@ public final class LandRegistryContract implements ContractInterface {
         } catch (Exception e) {
             // Catch and log the exception thrown during rich query execution or implicit close()
              Logger.getLogger(LandRegistryContract.class.getName())
-                     .log(Level.SEVERE, "Failed to execute rich query for owner: " + ownerId, e);
-             throw new ChaincodeException("Failed to execute rich query for owner: " + ownerId,
+                     .log(Level.SEVERE, "Failed to execute rich query for owner: " + normalizedOwnerId, e);
+             throw new ChaincodeException("Failed to execute rich query for owner: " + normalizedOwnerId,
 
                       LandRegistryErrors.QUERY_FAILED.toString());     
          }
