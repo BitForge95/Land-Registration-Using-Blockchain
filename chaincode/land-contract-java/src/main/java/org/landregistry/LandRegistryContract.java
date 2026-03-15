@@ -12,6 +12,8 @@ import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 import com.owlike.genson.Genson;
+ import java.util.HashMap;
+ import java.util.Map;
 
 @Contract(
         name = "LandRegistryContract",
@@ -276,7 +278,11 @@ public final class LandRegistryContract implements ContractInterface {
      */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String queryLandByOwner(final Context ctx, final String ownerId) {
-        String queryString = String.format("{\"selector\":{\"currentOwnerId\":\"%s\"}}", ownerId);
+         Map<String, Object> selector = new HashMap<>();
+         selector.put("currentOwnerId", ownerId);
+         Map<String, Object> query = new HashMap<>();
+         query.put("selector", selector);
+         String queryString = genson.serialize(query);
         StringBuilder response = new StringBuilder("[");
         
         // Use Fabric's rich query iterator
