@@ -1,0 +1,94 @@
+# ===============================
+# Hyperledger Fabric
+# ===============================
+
+blockchain-network/fabric-samples/
+organizations/
+system-genesis-block/
+channel-artifacts/
+
+*.log
+*.pem
+*.crt
+*.key
+*.csr
+*.yaml.tmp
+
+# Docker
+docker-data/
+docker-compose.override.yml
+
+# Fabric generated files
+*.block
+*.tx
+*.tar.gz
+
+# ===============================
+# Java / Gradle
+# ===============================
+
+.gradle/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ / IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ===============================
+# Node.js
+# ===============================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===============================
+# React build
+# ===============================
+
+frontend-ui/build/
+frontend-ui/.env
+
+# ===============================
+# Backend (Spring Boot)
+# ===============================
+
+backend-api/target/
+backend-api/.env
+
+# ===============================
+# OS files
+# ===============================
+
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Environment files
+# ===============================
+
+.env
+.env.local
+.env.production
+.env.development
+
+# ===============================
+# Logs
+# ===============================
+
+logs/
+*.log
+
+# ===============================
+# Fabric volumes
+# ===============================
+
+compose_*
