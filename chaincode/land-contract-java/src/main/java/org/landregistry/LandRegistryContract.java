@@ -37,7 +37,8 @@ public final class LandRegistryContract implements ContractInterface {
         ASSET_ALREADY_EXISTS,
         ASSET_NOT_ACTIVE,
         UNAUTHORIZED_SELLER, // Added to support Rule 2: Ownership Verification
-        INVALID_INPUT        // Added for basic input validation
+        INVALID_INPUT,        // Added for basic input validation
+        QUERY_FAILED // <-- FIXED: Added this missing enum value
     }
 
     /**
@@ -82,10 +83,12 @@ public final class LandRegistryContract implements ContractInterface {
             throw new ChaincodeException("Document hash must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
         }
+         // Normalize ULPIN for consistent keying and identity
+         final String normalizedUlpin = ulpin.trim();
 
         // Validation: Ensure the ULPIN doesn't already exist
-        if (assetExists(ctx, ulpin)) {
-            throw new ChaincodeException("Land Asset with ULPIN " + ulpin + " already exists", 
+          if (assetExists(ctx, normalizedUlpin)) {
+             throw new ChaincodeException("Land Asset with ULPIN " + normalizedUlpin + " already exists", 
                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
         }
 
@@ -99,10 +102,9 @@ public final class LandRegistryContract implements ContractInterface {
          }
 
         // Creation: Instantiate the immutable Java object
-        LandAsset land = new LandAsset(ulpin, gpsCoordinates, normalizedParentUlpin, currentOwnerId, documentHash, "ACTIVE");
-
+        LandAsset land = new LandAsset(normalizedUlpin, gpsCoordinates, normalizedParentUlpin, currentOwnerId, documentHash, "ACTIVE");
         // Persistence: Convert to JSON and save to the CouchDB world state
-        ctx.getStub().putStringState(ulpin, genson.serialize(land));
+        ctx.getStub().putStringState(normalizedUlpin, genson.serialize(land));
 
         return land;
     }
@@ -230,14 +232,14 @@ public final class LandRegistryContract implements ContractInterface {
                 // Safety Check: Ensure all ULPINs involved in mutation are distinct
          if (parentUlpin.equals(child1Ulpin) || parentUlpin.equals(child2Ulpin) || child1Ulpin.equals(child2Ulpin)) {
              throw new ChaincodeException("Mutation Rejected: Parent and child ULPINs must all be distinct",
-                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
+                                          LandRegistryErrors.INVALID_INPUT.toString());
          }
          // Optional Safety Check: Prevent obviously invalid GPS collisions (if identical boundaries are disallowed)
          if (child1Gps.equals(child2Gps)
                  || child1Gps.equals(parentLand.getGpsCoordinates())
                  || child2Gps.equals(parentLand.getGpsCoordinates())) {
              throw new ChaincodeException("Mutation Rejected: Child GPS coordinates must differ from each other and from the parent",
-                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
+                                          LandRegistryErrors.INVALID_INPUT.toString());
          }
 
 
@@ -280,6 +282,11 @@ public final class LandRegistryContract implements ContractInterface {
      */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public LandAsset queryLandByUlpin(final Context ctx, final String ulpin) {
+          if (ulpin == null || ulpin.trim().isEmpty()) {
+             throw new ChaincodeException(
+                     "Invalid ulpin: value must be non-null and non-blank",
+                     LandRegistryErrors.INVALID_INPUT.toString());
+         }
         String landJson = ctx.getStub().getStringState(ulpin);
         if (landJson == null || landJson.isEmpty()) {
             throw new ChaincodeException("Land Asset " + ulpin + " does not exist",
@@ -291,6 +298,16 @@ public final class LandRegistryContract implements ContractInterface {
     /**
      * Optional but Highly Recommended for CouchDB: Query by Owner
      * Uses CouchDB rich JSON querying to find all land owned by a specific Aadhaar/ID.
+      * <p>Performance note (CouchDB only): this method relies on a rich query filter on the
+      * {@code currentOwnerId} field. For large ledgers, you <strong>must</strong> provide a
+      * CouchDB index on {@code currentOwnerId} (for example, by packaging an index JSON file
+      * such as {@code META-INF/statedb/couchdb/indexes/land_indexCurrentOwnerId.json} that
+      * defines an index on {@code currentOwnerId}). Without such an index, CouchDB may need
+      * to perform a full scan of the state database and this query can become very slow.</p>
+      *
+      * <p>If you do not package this index with the chaincode, ensure that your network
+      * operators create and maintain an appropriate index on {@code currentOwnerId} in the
+      * state database.</p>
      */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String queryLandByOwner(final Context ctx, final String ownerId) {
@@ -307,7 +324,8 @@ public final class LandRegistryContract implements ContractInterface {
          String queryString = genson.serialize(query);
         StringBuilder response = new StringBuilder("[");
         
-        // Use Fabric's rich query iterator
+         // Use Fabric's rich query iterator. For CouchDB, ensure an index exists on "currentOwnerId"
+         // (see JavaDoc for queryLandByOwner) to avoid full collection scans on large ledgers.
         try (QueryResultsIterator<KeyValue> results = ctx.getStub().getQueryResult(queryString)) {
             // Iterate and build a JSON array response
             for (KeyValue result : results) {
@@ -320,8 +338,10 @@ public final class LandRegistryContract implements ContractInterface {
             // Catch and log the exception thrown during rich query execution or implicit close()
              Logger.getLogger(LandRegistryContract.class.getName())
                      .log(Level.SEVERE, "Failed to execute rich query for owner: " + ownerId, e);
-             throw new ChaincodeException("Failed to execute rich query for owner: " + ownerId, "QUERY_FAILED");
-        }
+             throw new ChaincodeException("Failed to execute rich query for owner: " + ownerId,
+
+                      LandRegistryErrors.QUERY_FAILED.toString());     
+         }
         response.append("]");
         return response.toString();
     }
