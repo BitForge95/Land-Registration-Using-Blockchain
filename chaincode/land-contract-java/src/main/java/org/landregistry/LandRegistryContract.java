@@ -192,7 +192,6 @@ public final class LandRegistryContract implements ContractInterface {
                      "Mutation Rejected: Input parameters must not be null or empty",
                      LandRegistryErrors.ASSET_NOT_FOUND.toString());
          }
-
         // 1. Fetch and Validate Parent Asset
         String parentJson = ctx.getStub().getStringState(parentUlpin);
         if (parentJson == null || parentJson.isEmpty()) {
