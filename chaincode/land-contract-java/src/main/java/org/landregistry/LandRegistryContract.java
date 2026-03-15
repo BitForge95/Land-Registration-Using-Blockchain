@@ -12,8 +12,10 @@ import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 import com.owlike.genson.Genson;
- import java.util.HashMap;
- import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Contract(
         name = "LandRegistryContract",
@@ -52,7 +54,7 @@ public final class LandRegistryContract implements ContractInterface {
      * @param ctx the transaction context
      * @param ulpin the Unique Land Parcel Identification Number (Primary Key)
      * @param gpsCoordinates the mathematical anchor
-     * @param parentUlpin Lineage tracking (pass "NONE" for root assets)
+     * @param parentUlpin Lineage tracking (use null/blank for root assets)
      * @param currentOwnerId The ID of the initial owner
      * @param documentHash The SHA-256 hash of the initial physical deed
      * @return the created LandAsset
@@ -70,10 +72,8 @@ public final class LandRegistryContract implements ContractInterface {
             throw new ChaincodeException("GPS coordinates must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
         }
-        if (parentUlpin == null || parentUlpin.trim().isEmpty()) {
-            throw new ChaincodeException("Parent ULPIN must not be null or empty (use 'NONE' for root assets)", 
-                                         LandRegistryErrors.INVALID_INPUT.toString());
-        }
+         // parentUlpin: allow null/blank to represent a root asset.
+         // Also accept legacy literal "NONE" (case-insensitive) and normalize it to null.
         if (currentOwnerId == null || currentOwnerId.trim().isEmpty()) {
             throw new ChaincodeException("Current owner ID must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
@@ -89,8 +89,17 @@ public final class LandRegistryContract implements ContractInterface {
                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
         }
 
+        // Normalize parent ULPIN: treat null/blank/"NONE" as a root asset (null in the domain model)
+         String normalizedParentUlpin = null;
+         if (parentUlpin != null) {
+             String trimmedParent = parentUlpin.trim();
+             if (!trimmedParent.isEmpty() && !"NONE".equalsIgnoreCase(trimmedParent)) {
+                 normalizedParentUlpin = trimmedParent;
+             }
+         }
+
         // Creation: Instantiate the immutable Java object
-        LandAsset land = new LandAsset(ulpin, gpsCoordinates, parentUlpin, currentOwnerId, documentHash, "ACTIVE");
+        LandAsset land = new LandAsset(ulpin, gpsCoordinates, normalizedParentUlpin, currentOwnerId, documentHash, "ACTIVE");
 
         // Persistence: Convert to JSON and save to the CouchDB world state
         ctx.getStub().putStringState(ulpin, genson.serialize(land));
@@ -110,7 +119,15 @@ public final class LandRegistryContract implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public LandAsset transferLandOwnership(final Context ctx, final String ulpin, 
                                            final String sellerId, final String buyerId, final String newDocumentHash) {
-         // Input Validation: Ensure buyerId and newDocumentHash are not null or blank
+         // Input Validation: Ensure ulpin, sellerId, buyerId and newDocumentHash are not null or blank
+          if (ulpin == null || ulpin.trim().isEmpty()) {
+              throw new ChaincodeException("Transaction Rejected: ulpin must not be null or blank",
+                                           LandRegistryErrors.INVALID_INPUT.toString());
+          }
+          if (sellerId == null || sellerId.trim().isEmpty()) {
+              throw new ChaincodeException("Transaction Rejected: sellerId must not be null or blank",
+                                           LandRegistryErrors.INVALID_INPUT.toString());
+          }
          if (buyerId == null || buyerId.trim().isEmpty()) {
              throw new ChaincodeException("Transaction Rejected: buyerId must not be null or blank",
                                           LandRegistryErrors.INVALID_INPUT.toString());
@@ -190,7 +207,7 @@ public final class LandRegistryContract implements ContractInterface {
                  || isNullOrBlank(newDocumentHash)) {
              throw new ChaincodeException(
                      "Mutation Rejected: Input parameters must not be null or empty",
-                     LandRegistryErrors.ASSET_NOT_FOUND.toString());
+                    LandRegistryErrors.INVALID_INPUT.toString());
          }
         // 1. Fetch and Validate Parent Asset
         String parentJson = ctx.getStub().getStringState(parentUlpin);
@@ -277,6 +294,12 @@ public final class LandRegistryContract implements ContractInterface {
      */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String queryLandByOwner(final Context ctx, final String ownerId) {
+         if (ownerId == null || ownerId.trim().isEmpty()) {
+             throw new ChaincodeException(
+                     "Invalid ownerId: value must be non-null and non-blank",
+                     LandRegistryErrors.INVALID_INPUT.toString());
+         }
+
          Map<String, Object> selector = new HashMap<>();
          selector.put("currentOwnerId", ownerId);
          Map<String, Object> query = new HashMap<>();
@@ -294,10 +317,11 @@ public final class LandRegistryContract implements ContractInterface {
                 response.append(result.getStringValue());
             }
         } catch (Exception e) {
-            // Catch the exception thrown by the implicit close()
-            throw new ChaincodeException("Failed to execute rich query for owner: " + ownerId, e);
+            // Catch and log the exception thrown during rich query execution or implicit close()
+             Logger.getLogger(LandRegistryContract.class.getName())
+                     .log(Level.SEVERE, "Failed to execute rich query for owner: " + ownerId, e);
+             throw new ChaincodeException("Failed to execute rich query for owner: " + ownerId, "QUERY_FAILED");
         }
-        
         response.append("]");
         return response.toString();
     }
