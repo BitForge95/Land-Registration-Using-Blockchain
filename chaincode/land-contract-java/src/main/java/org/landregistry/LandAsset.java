@@ -8,11 +8,8 @@ import java.util.Objects;
 @DataType()
 public final class LandAsset {
 
-    // --- IMMUTABLE ANCHOR FIELDS ---
-    // These define the physical and historical reality of the land and should never change once minted.
-
     @Property()
-    private final String ulpin; // Primary Key: Unique Land Parcel Identification Number [cite: 6, 7]
+    private final String ulpin; // Primary Key: Unique Land Parcel Identification Number
 
     @Property()
     private final String gpsCoordinates; // Mathematical anchor resolving the oracle problem
@@ -20,17 +17,14 @@ public final class LandAsset {
     @Property()
     private final String parentUlpin; // Lineage tracking for mutations (null if root asset)
 
-    // --- MUTABLE STATE FIELDS ---
-    // These represent the current legal and operational state on the ledger.
+    @Property()
+    private final String currentOwnerId; 
 
     @Property()
-    private String currentOwnerId; // Replaced ownerAadhaarHash to align with Seller ID / Buyer ID workflow [cite: 59, 60]
+    private final String documentHash; // SHA-256 Hash or IPFS CID of the actual PDF deed
 
     @Property()
-    private String documentHash; // SHA-256 Hash or IPFS CID of the actual PDF deed [cite: 44, 46, 61]
-
-    @Property()
-    private String status; // e.g., "ACTIVE", "PENDING_TRANSFER", "RETIRED_MUTATED"
+    private final String status; // e.g., "ACTIVE", "PENDING_TRANSFER", "RETIRED_MUTATED"
 
     public LandAsset(@JsonProperty("ulpin") final String ulpin,
                      @JsonProperty("gpsCoordinates") final String gpsCoordinates,
@@ -53,19 +47,6 @@ public final class LandAsset {
     public String getCurrentOwnerId() { return currentOwnerId; }
     public String getDocumentHash() { return documentHash; }
     public String getStatus() { return status; }
-
-    // --- Setters (Strictly for mutable state fields only) ---
-    public void setCurrentOwnerId(String currentOwnerId) { 
-        this.currentOwnerId = currentOwnerId; 
-    }
-    
-    public void setDocumentHash(String documentHash) { 
-        this.documentHash = documentHash; 
-    }
-    
-    public void setStatus(String status) { 
-        this.status = status; 
-    }
 
     @Override
     public boolean equals(final Object obj) {

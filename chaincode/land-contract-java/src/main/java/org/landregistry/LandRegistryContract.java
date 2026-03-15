@@ -83,40 +83,42 @@ public final class LandRegistryContract implements ContractInterface {
     public LandAsset transferLandOwnership(final Context ctx, final String ulpin, 
                                            final String sellerId, final String buyerId, final String newDocumentHash) {
         
-        // RULE 1: Land Existence [cite: 87]
-        // Does ULPIN exist? [cite: 88]
+        // RULE 1: Land Existence
         String landJson = ctx.getStub().getStringState(ulpin);
         if (landJson == null || landJson.isEmpty()) {
             throw new ChaincodeException("Transaction Rejected: Land Asset " + ulpin + " does not exist", 
                                          LandRegistryErrors.ASSET_NOT_FOUND.toString());
         }
 
-        // Deserialization
         LandAsset land = genson.deserialize(landJson, LandAsset.class);
 
-        // RULE 2: Ownership Verification [cite: 90]
-        // Is User A (sellerId) the current owner? [cite: 91]
+        // RULE 2: Ownership Verification
         if (!land.getCurrentOwnerId().equals(sellerId)) {
             throw new ChaincodeException("Transaction Rejected: Seller ID " + sellerId + " is not the recognized owner of ULPIN " + ulpin, 
                                          LandRegistryErrors.UNAUTHORIZED_SELLER.toString());
         }
 
-        // State Check: Cannot transfer mutated or retired land
+        // State Check
         if (!land.getStatus().equals("ACTIVE")) {
             throw new ChaincodeException("Transaction Rejected: Land Asset " + ulpin + " is not ACTIVE", 
                                          LandRegistryErrors.ASSET_NOT_ACTIVE.toString());
         }
 
         // --- MUTATION PHASE ---
-        // Instead of creating a new object, we use our new setters to update the state directly.
-        land.setCurrentOwnerId(buyerId);
-        land.setDocumentHash(newDocumentHash);
+        // Enforce immutability in memory by creating a new instance
+        LandAsset updatedLand = new LandAsset(
+            land.getUlpin(),
+            land.getGpsCoordinates(),
+            land.getParentUlpin(),
+            buyerId, // <-- Updated owner
+            newDocumentHash, // <-- Updated document hash
+            land.getStatus()
+        );
 
-        // Step 5: Ledger Update - The CouchDB world state updates immediately[cite: 113, 114].
-        // Overwrite the world state mapping ULPIN -> Owner: User B[cite: 117].
-        ctx.getStub().putStringState(ulpin, genson.serialize(land));
+        // Step 5: Ledger Update
+        ctx.getStub().putStringState(ulpin, genson.serialize(updatedLand));
 
-        return land;
+        return updatedLand;
     }
 
     /**
