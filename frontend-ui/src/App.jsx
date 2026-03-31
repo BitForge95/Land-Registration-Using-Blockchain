@@ -5,28 +5,40 @@ import OwnerSearch from './components/OwnerSearch';
 import TransferLand from './components/TransferLand';
 import MutateLand from './components/MutateLand';
 import AssetHistory from './components/AssetHistory';
+import MapView from './components/MapView';
 import './index.css';
 
 const NAV_ITEMS = [
-  { id: 'register', label: 'Register Parcel',   icon: '⊕' },
-  { id: 'search',   label: 'Search by ULPIN',   icon: '◎' },
-  { id: 'owner',    label: 'Search by Owner',   icon: '◈' },
-  { id: 'transfer', label: 'Transfer Ownership',icon: '⇌' },
-  { id: 'mutate',   label: 'Mutate / Split',    icon: '⊗' },
-  { id: 'history',  label: 'Audit Trail',       icon: '◷' },
+  { id: 'register', label: 'Register Parcel', icon: '⊕' },
+  { id: 'search', label: 'Search by ULPIN', icon: '◎' },
+  { id: 'owner', label: 'Search by Owner', icon: '◈' },
+  { id: 'map', label: 'Search by Map', icon: '⊞' },
+  { id: 'transfer', label: 'Transfer Ownership', icon: '⇌' },
+  { id: 'mutate', label: 'Mutate / Split', icon: '⊗' },
+  { id: 'history', label: 'Audit Trail', icon: '◷' },
 ];
-
-const PAGES = {
-  register: <RegisterLand />,
-  search:   <SearchLand />,
-  owner:    <OwnerSearch />,
-  transfer: <TransferLand />,
-  mutate:   <MutateLand />,
-  history:  <AssetHistory />,
-};
 
 export default function App() {
   const [active, setActive] = useState('register');
+  const [prefill, setPrefill] = useState(null);
+
+  const navigateTo = (page, data = null) => {
+    setPrefill(data);
+    setActive(page);
+  };
+
+  const renderPage = () => {
+    switch (active) {
+      case 'register': return <RegisterLand prefill={prefill} onPrefillUsed={() => setPrefill(null)} />;
+      case 'search': return <SearchLand />;
+      case 'owner': return <OwnerSearch />;
+      case 'map': return <MapView onNavigateRegister={(data) => navigateTo('register', data)} />;
+      case 'transfer': return <TransferLand />;
+      case 'mutate': return <MutateLand />;
+      case 'history': return <AssetHistory />;
+      default: return null;
+    }
+  };
 
   return (
     <div className="app-layout">
@@ -44,7 +56,7 @@ export default function App() {
             <div
               key={id}
               className={`nav-item${active === id ? ' active' : ''}`}
-              onClick={() => setActive(id)}
+              onClick={() => navigateTo(id)}
             >
               <span className="nav-icon">{icon}</span>
               <span>{label}</span>
@@ -61,7 +73,7 @@ export default function App() {
       </aside>
 
       <main className="main-content" key={active}>
-        {PAGES[active]}
+        {renderPage()}
       </main>
     </div>
   );
