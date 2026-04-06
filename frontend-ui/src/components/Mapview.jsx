@@ -59,11 +59,14 @@ async function reverseGeocode(lat, lng, signal) {
   if (!res.ok) throw new Error(`Geocoding failed (${res.status})`);
   const data = await res.json();
   const addr = data.address || {};
+  // Use country_code (ISO-3166) for stable India detection; normalize case and trim
+  const countryCode = (addr.country_code || '').trim().toLowerCase();
   return {
     state: addr.state || '',
     district: addr.county || addr.state_district || '',
     city: addr.city || addr.town || addr.village || '',
     country: addr.country || '',
+    countryCode, // ISO-3166 code (e.g., 'in' for India)
     displayName: data.display_name || '',
   };
 }
@@ -124,7 +127,9 @@ export default function MapView({ onNavigateRegister }) {
         // Discard if a newer click already superseded this one
         if (thisReq !== reqIdRef.current) return;
         setGeocode(geo);
-        if (geo.country === 'India') {
+        // Use ISO-3166 country code ('in' for India) for stable, localization-independent detection
+        const isIndiaLocation = geo.countryCode === 'in';
+        if (isIndiaLocation) {
           setIsIndia(true);
           setUlpin(generateUlpin(geo, lat, lng));
         } else {
@@ -257,45 +262,52 @@ export default function MapView({ onNavigateRegister }) {
                 )}
               </div>
 
-              {!loading && geocode && (
+              {!loading && geocode && isIndia && (
                 <div className="card" style={{ padding: '16px 18px' }}>
                 <div className="card-title" style={{ marginBottom: 13 }}>
                   <span>⊞</span> Generated ULPIN
                 </div>
 
-                {isIndia ? (
-                  <>
-                    <div style={{
-                      background: 'var(--navy-pale)',
-                      border: '1.5px solid var(--border-active)',
-                      borderRadius: 5,
-                      padding: '11px 14px',
-                      marginBottom: 14,
+                <>
+                  <div style={{
+                    background: 'var(--navy-pale)',
+                    border: '1.5px solid var(--border-active)',
+                    borderRadius: 5,
+                    padding: '11px 14px',
+                    marginBottom: 14,
+                  }}>
+                    <span style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: 'var(--navy)',
+                      letterSpacing: '0.05em',
                     }}>
-                      <span style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: 'var(--navy)',
-                        letterSpacing: '0.05em',
-                      }}>
-                        {ulpin}
-                      </span>
-                    </div>
-                    
-                    <p style={{ fontSize: 11.5, color: 'var(--text-muted)', marginBottom: 14 }}>
-                      Tap below to open the Register form with ULPIN and GPS pre-filled.
-                    </p>
-                    
-                    <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleFillRegister}>
-                      Fill Register Form
-                    </button>
-                  </>
-                ) : (
-                  <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                    ULPIN generation is only available for locations within India.
+                      {ulpin}
+                    </span>
+                  </div>
+                  
+                  <p style={{ fontSize: 11.5, color: 'var(--text-muted)', marginBottom: 14 }}>
+                    Tap below to open the Register form with ULPIN and GPS pre-filled.
                   </p>
-                )}
+                  
+                  <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleFillRegister}>
+                    Fill Register Form
+                  </button>
+                </>
+                </div>
+              )}
+
+              {!loading && geocode && !isIndia && (
+                <div className="card" style={{ padding: '16px 18px' }}>
+                <div className="card-title" style={{ marginBottom: 13 }}>
+                  <span>⊞</span> Location Status
+                </div>
+
+                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  <strong>ULPIN generation is only available for locations within India.</strong><br/>
+                  Please select a location on the Indian map to enable ULPIN creation.
+                </p>
                 </div>
               )}
             </>
