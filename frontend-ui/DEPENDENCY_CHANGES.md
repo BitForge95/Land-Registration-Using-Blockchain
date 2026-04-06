@@ -20,9 +20,9 @@ These version upgrades are the result of:
 
 ## Compatibility Notes
 
-- **axios 1.14.0**: Includes minor improvements and is fully backward-compatible with existing API calls
-- **vite 8.0.3**: Patch release with bug fixes; no breaking changes
-- All upgrades maintain the caret (`^`) version constraints specified in package.json
+- **axios 1.14.0**: Minor version bump; compatibility with existing API calls is expected per semver, but should be confirmed against the upstream changelog/release notes
+- **vite 8.0.3**: Patch release with bug fixes; no breaking changes are expected per semver, subject to upstream release notes
+- All upgrades remain within the caret (`^`) version constraints specified in package.json, though runtime compatibility should still be validated against upstream release documentation
 
 ## Recommendation
 
