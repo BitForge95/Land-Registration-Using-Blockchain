@@ -306,7 +306,7 @@ export default function MapView({ onNavigateRegister }) {
 
                 <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                   <strong>ULPIN generation is only available for locations within India.</strong><br/>
-                  Please select a location on the Indian map to enable ULPIN creation.
+                  Please select a location within India to enable ULPIN creation.
                 </p>
                 </div>
               )}
