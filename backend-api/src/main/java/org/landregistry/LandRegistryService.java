@@ -15,14 +15,9 @@ public class LandRegistryService {
 
     @Autowired
     public LandRegistryService(Gateway gateway) {
-        // "landchannel" is the exact channel name generated in your deployment script
         Network network = gateway.getNetwork("landchannel");
-        
-        // "landregistry" is the chaincode name installed on the peers
         this.contract = network.getContract("landregistry");
     }
-
-    // --- WRITE OPERATIONS (Requires Consensus) ---
 
     public String createLandAsset(String ulpin, String gpsCoordinates, String parentUlpin, String currentOwnerId, String documentHash) throws Exception {
         byte[] result = contract.submitTransaction("createLandAsset", ulpin, gpsCoordinates, parentUlpin, currentOwnerId, documentHash);
@@ -55,10 +50,8 @@ public class LandRegistryService {
         );
         return new String(result, StandardCharsets.UTF_8);
     }
-    // --- READ OPERATIONS (Fast Local Queries) ---
 
     public String getLandHistory(String ulpin) throws Exception {
-        // We use evaluateTransaction because we are just reading the ledger, not modifying it
         byte[] result = contract.evaluateTransaction("getAssetHistory", ulpin);
         return new String(result, StandardCharsets.UTF_8);
     }

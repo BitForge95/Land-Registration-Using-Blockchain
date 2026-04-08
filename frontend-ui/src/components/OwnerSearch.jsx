@@ -16,7 +16,7 @@ export default function OwnerSearch() {
 
     try {
       const data = await getLandByOwner(ownerId.trim());
-      // data may be an array or a JSON-encoded array string
+      // API may return either parsed JSON or a JSON-encoded string.
       const list = Array.isArray(data) ? data : JSON.parse(data);
       setResults(list);
     } catch (err) {

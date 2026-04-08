@@ -27,7 +27,6 @@ public class FabricConnectionConfig {
     private static final String PEER_ENDPOINT = "localhost:7051";
     private static final String OVERRIDE_AUTH = "peer0.org1.landregistry.com";
 
-    // Dynamic paths to the crypto materials in your blockchain-network folder
     private static final Path CRYPTO_PATH = Paths.get("..", "blockchain-network", "crypto-config", "peerOrganizations", "org1.landregistry.com");
     private static final Path CERT_DIR_PATH = CRYPTO_PATH.resolve(Paths.get("users", "User1@org1.landregistry.com", "msp", "signcerts"));
     private static final Path KEY_DIR_PATH = CRYPTO_PATH.resolve(Paths.get("users", "User1@org1.landregistry.com", "msp", "keystore"));
@@ -41,7 +40,6 @@ public class FabricConnectionConfig {
                 .identity(newIdentity())
                 .signer(newSigner())
                 .connection(channel)
-                // Set reasonable timeouts for blockchain operations
                 .evaluateOptions(options -> options.withDeadlineAfter(5, TimeUnit.SECONDS))
                 .endorseOptions(options -> options.withDeadlineAfter(15, TimeUnit.SECONDS))
                 .submitOptions(options -> options.withDeadlineAfter(5, TimeUnit.SECONDS))

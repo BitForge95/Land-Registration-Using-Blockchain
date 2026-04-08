@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-// Ensure your API URL matches the others in your project
 const API_URL = 'http://localhost:8080/api/land'; 
 
 export default function AssetHistory() {
@@ -16,7 +15,6 @@ export default function AssetHistory() {
     setError(null);
     try {
       const response = await axios.get(`${API_URL}/${ulpin}/history`);
-      // Sort the array so the newest transactions are at the top
       const sortedHistory = response.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
       setHistory(sortedHistory);
     } catch (err) {

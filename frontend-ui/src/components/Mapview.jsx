@@ -8,7 +8,6 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({ iconUrl: markerIcon, iconRetinaUrl: markerIcon2x, shadowUrl: markerShadow });
 
-// ── State code lookup ─────────────────────────────────────────────────────────
 const STATE_CODES = {
   'Madhya Pradesh': 'MP', 'Uttar Pradesh': 'UP', 'Rajasthan': 'RJ',
   'Maharashtra': 'MH', 'Gujarat': 'GJ', 'Karnataka': 'KA',
@@ -27,7 +26,6 @@ function toCode(name = '') {
   return words.map(w => w[0]).join('').slice(0, 3).toUpperCase().padEnd(3, 'X');
 }
 
-// Serial range 000–999 (matches the placeholder format MP-JBP-2026-003)
 function coordSerial(lat, lng) {
   return String(Math.abs(Math.round((lat * 1000 + lng * 100) * 7)) % 1000)
     .padStart(3, '0');
@@ -41,9 +39,8 @@ function generateUlpin(geo, lat, lng) {
   return `${state}-${district}-${year}-${serial}`;
 }
 
-// Nominatim reverse geocode — called directly for demo/dev use.
-// For production: proxy through the Spring Boot backend with caching and
-// a proper User-Agent header (Nominatim policy requires identification).
+// Nominatim is called directly in the browser for development.
+// For production, proxy via backend with caching and a compliant User-Agent.
 async function reverseGeocode(lat, lng, signal) {
   const res = await fetch(
     `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`,
@@ -51,8 +48,6 @@ async function reverseGeocode(lat, lng, signal) {
       signal,
       headers: {
         'Accept-Language': 'en',
-        // User-Agent not settable from browsers (CORS restriction).
-        // Set it server-side if you proxy this through Spring Boot.
       },
     }
   );
@@ -67,7 +62,6 @@ async function reverseGeocode(lat, lng, signal) {
   };
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
 export default function MapView({ onNavigateRegister }) {
   const mapRef = useRef(null);
   const leafletRef = useRef(null);
@@ -167,8 +161,6 @@ export default function MapView({ onNavigateRegister }) {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16, height: 520 }}>
-
-        {/* MAP */}
         <div style={{
           borderRadius: 8,
           overflow: 'hidden',
@@ -178,7 +170,6 @@ export default function MapView({ onNavigateRegister }) {
           <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
         </div>
 
-        {/* PANEL */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
           {!clicked && (

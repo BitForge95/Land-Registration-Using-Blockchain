@@ -9,22 +9,22 @@ import java.util.Objects;
 public final class LandAsset {
 
     @Property()
-    private final String ulpin; // Primary Key: Unique Land Parcel Identification Number
+    private final String ulpin;
 
     @Property()
-    private final String gpsCoordinates; // Mathematical anchor resolving the oracle problem
+    private final String gpsCoordinates;
 
     @Property()
-    private final String parentUlpin; // Lineage tracking for mutations (null if root asset)
+    private final String parentUlpin;
 
     @Property()
     private final String currentOwnerId; 
 
     @Property()
-    private final String documentHash; // SHA-256 Hash or IPFS CID of the actual PDF deed
+    private final String documentHash;
 
     @Property()
-    private final String status; // e.g., "ACTIVE", "PENDING_TRANSFER", "RETIRED_MUTATED"
+    private final String status;
 
     public LandAsset(@JsonProperty("ulpin") final String ulpin,
                      @JsonProperty("gpsCoordinates") final String gpsCoordinates,
@@ -40,7 +40,6 @@ public final class LandAsset {
         this.status = status;
     }
 
-    // --- Getters (For all fields) ---
     public String getUlpin() { return ulpin; }
     public String getGpsCoordinates() { return gpsCoordinates; }
     public String getParentUlpin() { return parentUlpin; }

@@ -69,7 +69,6 @@ public final class LandRegistryContract implements ContractInterface {
     public LandAsset createLandAsset(final Context ctx, final String ulpin, final String gpsCoordinates, 
                                      final String parentUlpin, final String currentOwnerId, final String documentHash) {
         
-        // --- INPUT VALIDATION PHASE ---
         if (ulpin == null || ulpin.trim().isEmpty()) {
             throw new ChaincodeException("ULPIN must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
@@ -78,8 +77,7 @@ public final class LandRegistryContract implements ContractInterface {
             throw new ChaincodeException("GPS coordinates must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
         }
-         // parentUlpin: allow null/blank to represent a root asset.
-         // Also accept legacy literal "NONE" (case-insensitive) and normalize it to null.
+        // Allow null/blank/"NONE" for root assets.
         if (currentOwnerId == null || currentOwnerId.trim().isEmpty()) {
             throw new ChaincodeException("Current owner ID must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
@@ -88,27 +86,22 @@ public final class LandRegistryContract implements ContractInterface {
             throw new ChaincodeException("Document hash must not be null or empty", 
                                          LandRegistryErrors.INVALID_INPUT.toString());
         }
-         // Normalize ULPIN for consistent keying and identity
-         final String normalizedUlpin = ulpin.trim();
+        final String normalizedUlpin = ulpin.trim();
 
-        // Validation: Ensure the ULPIN doesn't already exist
-          if (assetExists(ctx, normalizedUlpin)) {
-             throw new ChaincodeException("Land Asset with ULPIN " + normalizedUlpin + " already exists", 
+        if (assetExists(ctx, normalizedUlpin)) {
+            throw new ChaincodeException("Land Asset with ULPIN " + normalizedUlpin + " already exists", 
                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
         }
 
-        // Normalize parent ULPIN: treat null/blank/"NONE" as a root asset (null in the domain model)
-         String normalizedParentUlpin = null;
-         if (parentUlpin != null) {
-             String trimmedParent = parentUlpin.trim();
-             if (!trimmedParent.isEmpty() && !"NONE".equalsIgnoreCase(trimmedParent)) {
-                 normalizedParentUlpin = trimmedParent;
-             }
-         }
+        String normalizedParentUlpin = null;
+        if (parentUlpin != null) {
+            String trimmedParent = parentUlpin.trim();
+            if (!trimmedParent.isEmpty() && !"NONE".equalsIgnoreCase(trimmedParent)) {
+                normalizedParentUlpin = trimmedParent;
+            }
+        }
 
-        // Creation: Instantiate the immutable Java object
         LandAsset land = new LandAsset(normalizedUlpin, gpsCoordinates, normalizedParentUlpin, currentOwnerId, documentHash, "ACTIVE");
-        // Persistence: Convert to JSON and save to the CouchDB world state
         ctx.getStub().putStringState(normalizedUlpin, genson.serialize(land));
 
         return land;
@@ -126,24 +119,23 @@ public final class LandRegistryContract implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public LandAsset transferLandOwnership(final Context ctx, final String ulpin, 
                                            final String sellerId, final String buyerId, final String newDocumentHash) {
-         // Input Validation: Ensure ulpin, sellerId, buyerId and newDocumentHash are not null or blank
-          if (ulpin == null || ulpin.trim().isEmpty()) {
-              throw new ChaincodeException("Transaction Rejected: ulpin must not be null or blank",
-                                           LandRegistryErrors.INVALID_INPUT.toString());
-          }
-          if (sellerId == null || sellerId.trim().isEmpty()) {
-              throw new ChaincodeException("Transaction Rejected: sellerId must not be null or blank",
-                                           LandRegistryErrors.INVALID_INPUT.toString());
-          }
-         if (buyerId == null || buyerId.trim().isEmpty()) {
-             throw new ChaincodeException("Transaction Rejected: buyerId must not be null or blank",
-                                          LandRegistryErrors.INVALID_INPUT.toString());
-         }
-         if (newDocumentHash == null || newDocumentHash.trim().isEmpty()) {
-             throw new ChaincodeException("Transaction Rejected: newDocumentHash must not be null or blank",
-                                          LandRegistryErrors.INVALID_INPUT.toString());
-         }
-        // RULE 1: Land Existence
+        if (ulpin == null || ulpin.trim().isEmpty()) {
+            throw new ChaincodeException("Transaction Rejected: ulpin must not be null or blank",
+                                         LandRegistryErrors.INVALID_INPUT.toString());
+        }
+        if (sellerId == null || sellerId.trim().isEmpty()) {
+            throw new ChaincodeException("Transaction Rejected: sellerId must not be null or blank",
+                                         LandRegistryErrors.INVALID_INPUT.toString());
+        }
+        if (buyerId == null || buyerId.trim().isEmpty()) {
+            throw new ChaincodeException("Transaction Rejected: buyerId must not be null or blank",
+                                         LandRegistryErrors.INVALID_INPUT.toString());
+        }
+        if (newDocumentHash == null || newDocumentHash.trim().isEmpty()) {
+            throw new ChaincodeException("Transaction Rejected: newDocumentHash must not be null or blank",
+                                         LandRegistryErrors.INVALID_INPUT.toString());
+        }
+
         String landJson = ctx.getStub().getStringState(ulpin);
         if (landJson == null || landJson.isEmpty()) {
             throw new ChaincodeException("Transaction Rejected: Land Asset " + ulpin + " does not exist", 
@@ -152,36 +144,30 @@ public final class LandRegistryContract implements ContractInterface {
 
         LandAsset land = genson.deserialize(landJson, LandAsset.class);
 
-        // RULE 2: Ownership Verification
         if (!land.getCurrentOwnerId().equals(sellerId)) {
             throw new ChaincodeException("Transaction Rejected: Seller ID " + sellerId + " is not the recognized owner of ULPIN " + ulpin, 
                                          LandRegistryErrors.UNAUTHORIZED_SELLER.toString());
         }
 
-        // State Check
         if (!land.getStatus().equals("ACTIVE")) {
             throw new ChaincodeException("Transaction Rejected: Land Asset " + ulpin + " is not ACTIVE", 
                                          LandRegistryErrors.ASSET_NOT_ACTIVE.toString());
         }
 
-        // --- MUTATION PHASE ---
-        // Enforce immutability in memory by creating a new instance
         LandAsset updatedLand = new LandAsset(
             land.getUlpin(),
             land.getGpsCoordinates(),
             land.getParentUlpin(),
-            buyerId, // <-- Updated owner
-            newDocumentHash, // <-- Updated document hash
+            buyerId,
+            newDocumentHash,
             land.getStatus()
         );
 
-        // Step 5: Ledger Update
         ctx.getStub().putStringState(ulpin, genson.serialize(updatedLand));
 
         return updatedLand;
     }
 
-    // Helper method to validate that a string is neither null nor blank.
     private boolean isNullOrBlank(final String value) {
         return value == null || value.trim().isEmpty();
     }
@@ -203,26 +189,22 @@ public final class LandRegistryContract implements ContractInterface {
                              final String child1Ulpin, final String child1Gps,
                              final String child2Ulpin, final String child2Gps,
                              final String newDocumentHash) {
+    if (isNullOrBlank(parentUlpin)
+        || isNullOrBlank(currentOwnerId)
+        || isNullOrBlank(child1Ulpin)
+        || isNullOrBlank(child1Gps)
+        || isNullOrBlank(child2Ulpin)
+        || isNullOrBlank(child2Gps)
+        || isNullOrBlank(newDocumentHash)) {
+        throw new ChaincodeException(
+            "Mutation Rejected: Input parameters must not be null or empty",
+            LandRegistryErrors.INVALID_INPUT.toString());
+    }
 
-         // 0. Basic input validation to prevent null/blank values from reaching ledger APIs
-         if (isNullOrBlank(parentUlpin)
-                 || isNullOrBlank(currentOwnerId)
-                 || isNullOrBlank(child1Ulpin)
-                 || isNullOrBlank(child1Gps)
-                 || isNullOrBlank(child2Ulpin)
-                 || isNullOrBlank(child2Gps)
-                 || isNullOrBlank(newDocumentHash)) {
-             throw new ChaincodeException(
-                     "Mutation Rejected: Input parameters must not be null or empty",
-                     LandRegistryErrors.INVALID_INPUT.toString());
-         }
+    final String normalizedParentUlpin = parentUlpin != null ? parentUlpin.trim() : null;
+    final String normalizedChild1Ulpin = child1Ulpin != null ? child1Ulpin.trim() : null;
+    final String normalizedChild2Ulpin = child2Ulpin != null ? child2Ulpin.trim() : null;
 
-         // Normalize ULPINs to ensure consistent world-state keys and comparisons
-         final String normalizedParentUlpin = parentUlpin != null ? parentUlpin.trim() : null;
-         final String normalizedChild1Ulpin = child1Ulpin != null ? child1Ulpin.trim() : null;
-         final String normalizedChild2Ulpin = child2Ulpin != null ? child2Ulpin.trim() : null;
-
-        // 1. Fetch and Validate Parent Asset
         String parentJson = ctx.getStub().getStringState(normalizedParentUlpin);
         if (parentJson == null || parentJson.isEmpty()) {
             throw new ChaincodeException("Mutation Rejected: Parent Land Asset does not exist", 
@@ -230,7 +212,6 @@ public final class LandRegistryContract implements ContractInterface {
         }
         LandAsset parentLand = genson.deserialize(parentJson, LandAsset.class);
 
-        // 2. Verify Ownership and Status
         if (!parentLand.getCurrentOwnerId().equals(currentOwnerId)) {
             throw new ChaincodeException("Mutation Rejected: Unauthorized owner", 
                                          LandRegistryErrors.UNAUTHORIZED_SELLER.toString());
@@ -240,49 +221,42 @@ public final class LandRegistryContract implements ContractInterface {
                                          LandRegistryErrors.ASSET_NOT_ACTIVE.toString());
         }
 
-                // Safety Check: Ensure all ULPINs involved in mutation are distinct
-         if (normalizedParentUlpin.equals(normalizedChild1Ulpin)
-                 || normalizedParentUlpin.equals(normalizedChild2Ulpin)
-                 || normalizedChild1Ulpin.equals(normalizedChild2Ulpin)) {
-             throw new ChaincodeException("Mutation Rejected: Parent and child ULPINs must all be distinct",
-                                          LandRegistryErrors.INVALID_INPUT.toString());
-         }
-         // Optional Safety Check: Prevent obviously invalid GPS collisions (if identical boundaries are disallowed)
-         if (child1Gps.equals(child2Gps)
-                 || child1Gps.equals(parentLand.getGpsCoordinates())
-                 || child2Gps.equals(parentLand.getGpsCoordinates())) {
-             throw new ChaincodeException("Mutation Rejected: Child GPS coordinates must differ from each other and from the parent",
-                                          LandRegistryErrors.INVALID_INPUT.toString());
-         }
+            if (normalizedParentUlpin.equals(normalizedChild1Ulpin)
+                || normalizedParentUlpin.equals(normalizedChild2Ulpin)
+                || normalizedChild1Ulpin.equals(normalizedChild2Ulpin)) {
+                throw new ChaincodeException("Mutation Rejected: Parent and child ULPINs must all be distinct",
+                             LandRegistryErrors.INVALID_INPUT.toString());
+            }
+            if (child1Gps.equals(child2Gps)
+                || child1Gps.equals(parentLand.getGpsCoordinates())
+                || child2Gps.equals(parentLand.getGpsCoordinates())) {
+                throw new ChaincodeException("Mutation Rejected: Child GPS coordinates must differ from each other and from the parent",
+                             LandRegistryErrors.INVALID_INPUT.toString());
+            }
 
-
-        // Safety Check: Ensure new ULPINs don't clash with existing ones
         if (assetExists(ctx, normalizedChild1Ulpin) || assetExists(ctx, normalizedChild2Ulpin)) {
             throw new ChaincodeException("Mutation Rejected: One or both child ULPINs already exist", 
                                          LandRegistryErrors.ASSET_ALREADY_EXISTS.toString());
         }
 
-        // 3. RETIRE the Parent Asset (Enforcing Immutability)
         LandAsset retiredParent = new LandAsset(
                 parentLand.getUlpin(),
                 parentLand.getGpsCoordinates(),
                 parentLand.getParentUlpin(),
                 parentLand.getCurrentOwnerId(),
                 newDocumentHash,
-                "RETIRED_MUTATED" // <-- Status change
+                "RETIRED_MUTATED"
         );
         ctx.getStub().putStringState(parentUlpin, genson.serialize(retiredParent));
 
-        // 4. MINT Child Asset 1
         LandAsset child1 = new LandAsset(
-                child1Ulpin, child1Gps, parentUlpin, // <-- Lineage tied to parent
+                child1Ulpin, child1Gps, parentUlpin,
                 currentOwnerId, newDocumentHash, "ACTIVE"
         );
         ctx.getStub().putStringState(child1Ulpin, genson.serialize(child1));
 
-        // 5. MINT Child Asset 2
         LandAsset child2 = new LandAsset(
-                child2Ulpin, child2Gps, parentUlpin, // <-- Lineage tied to parent
+                child2Ulpin, child2Gps, parentUlpin,
                 currentOwnerId, newDocumentHash, "ACTIVE"
         );
         ctx.getStub().putStringState(child2Ulpin, genson.serialize(child2));
@@ -300,7 +274,6 @@ public final class LandRegistryContract implements ContractInterface {
                     "Invalid ulpin: value must be non-null and non-blank",
                     LandRegistryErrors.INVALID_INPUT.toString());
         }
-        // Normalize ULPIN once and use the trimmed value for state lookup and error messages
         String normalizedUlpin = ulpin.trim();
         String landJson = ctx.getStub().getStringState(normalizedUlpin);
         if (landJson == null || landJson.isEmpty()) {
@@ -346,10 +319,8 @@ public final class LandRegistryContract implements ContractInterface {
          String queryString = genson.serialize(query);
         StringBuilder response = new StringBuilder("[");
         
-         // Use Fabric's rich query iterator. For CouchDB, ensure an index exists on "currentOwnerId"
-         // (see JavaDoc for queryLandByOwner) to avoid full collection scans on large ledgers.
+        // For large ledgers, keep an index on currentOwnerId to avoid full scans.
         try (QueryResultsIterator<KeyValue> results = ctx.getStub().getQueryResult(queryString)) {
-            // Iterate and build a JSON array response
             for (KeyValue result : results) {
                 if (response.length() > 1) {
                     response.append(",");
@@ -357,13 +328,11 @@ public final class LandRegistryContract implements ContractInterface {
                 response.append(result.getStringValue());
             }
         } catch (Exception e) {
-            // Catch and log the exception thrown during rich query execution or implicit close()
-             Logger.getLogger(LandRegistryContract.class.getName())
-                     .log(Level.SEVERE, "Failed to execute rich query for owner: " + normalizedOwnerId, e);
-             throw new ChaincodeException("Failed to execute rich query for owner: " + normalizedOwnerId,
-
-                      LandRegistryErrors.QUERY_FAILED.toString());     
-         }
+            Logger.getLogger(LandRegistryContract.class.getName())
+                .log(Level.SEVERE, "Failed to execute rich query for owner: " + normalizedOwnerId, e);
+            throw new ChaincodeException("Failed to execute rich query for owner: " + normalizedOwnerId,
+                LandRegistryErrors.QUERY_FAILED.toString());
+        }
         response.append("]");
         return response.toString();
     }
@@ -382,13 +351,10 @@ public final class LandRegistryContract implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String getAssetHistory(final Context ctx, final String ulpin) {
         ChaincodeStub stub = ctx.getStub();
-        
-        // Use the native Fabric API to get the history for a specific key
         QueryResultsIterator<KeyModification> history = stub.getHistoryForKey(ulpin);
 
         List<String> historyList = new ArrayList<>();
-        
-        // Loop through the history and build a JSON response
+
         for (KeyModification modification : history) {
             String record = String.format("{\"txId\":\"%s\", \"value\":%s, \"timestamp\":\"%s\", \"isDeleted\":%b}",
                     modification.getTxId(),
