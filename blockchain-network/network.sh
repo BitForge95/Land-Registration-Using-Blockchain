@@ -4,6 +4,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
+export PATH="$SCRIPT_DIR/bin:$PATH"
 
 printHelp() {
   echo "Usage:"
@@ -33,7 +34,7 @@ networkUp() {
   fi
 
   echo "Starting Fabric containers..."
-  docker-compose up -d
+  docker compose up -d
 
   echo "Network started successfully!"
   docker ps
@@ -41,7 +42,7 @@ networkUp() {
 
 networkDown() {
   echo "Stopping Fabric containers..."
-  docker-compose down
+  docker compose down
   echo "Network stopped."
 }
 

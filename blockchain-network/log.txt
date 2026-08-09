@@ -1,2 +1,2 @@
 Installed chaincodes on peer:
-Package ID: landregistry_1.0:66dbb8546dd189b270d14ceb0adc6cee0904745f414edd38d5d93ef399cd5446, Label: landregistry_1.0
+Package ID: landregistry_1.0:162d53d8a5d787a1ebda335e8d3402e97ced6a0fb0e373c8ce952fbff3e4faee, Label: landregistry_1.0
