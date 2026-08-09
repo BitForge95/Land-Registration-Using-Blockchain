@@ -162,7 +162,35 @@ body::before {
   padding: 13px 20px;
   border-top: 1px solid rgba(255,255,255,0.1);
   background: rgba(0,0,0,0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.language-icon { font-size: 12px; opacity: 0.6; flex-shrink: 0; }
+
+.language-select {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.75);
+  font-size: 11px;
+  font-family: inherit;
+  border-radius: 5px;
+  padding: 5px 6px;
+  cursor: pointer;
+}
+
+.language-select:hover { background: rgba(255,255,255,0.13); }
+.language-select:focus { outline: none; border-color: rgba(255,255,255,0.4); }
+.language-select option { background: var(--navy, #0f2d5a); color: #fff; }
 
 .network-status { display: flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(255,255,255,0.38); }
 
@@ -442,7 +470,7 @@ body::before {
 @media (max-width: 768px) {
   :root { --sidebar-width: 60px; }
   .logo-name, .logo-dept, .nav-section-label,
-  .nav-item span:not(.nav-icon), .network-status span { display: none; }
+  .nav-item span:not(.nav-icon), .network-status span, .language-switcher { display: none; }
   .nav-item { justify-content: center; padding: 13px 0; }
   .sidebar-logo { display: flex; align-items: center; justify-content: center; padding: 14px; }
   .logo-emblem { margin-bottom: 0; }

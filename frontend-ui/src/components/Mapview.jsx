@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -67,6 +68,7 @@ async function reverseGeocode(lat, lng, signal) {
 }
 
 export default function MapView({ onNavigateRegister }) {
+  const { t } = useTranslation();
   const mapRef = useRef(null);
   const leafletRef = useRef(null);
   const markerRef = useRef(null);
@@ -133,13 +135,16 @@ export default function MapView({ onNavigateRegister }) {
       } catch (err) {
         if (err.name === 'AbortError') return; // superseded — silently ignore
         if (thisReq !== reqIdRef.current) return;
-        setError('Reverse geocoding failed. Check your connection.');
+        setError(t('map.geocodeFailed'));
       } finally {
         if (thisReq === reqIdRef.current) setLoading(false);
       }
     });
 
     leafletRef.current = map;
+    // t excluded intentionally: i18next's t() reads the live active language at call time,
+    // so re-running this on language change would needlessly tear down and rebuild the map.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pinIcon]);
 
   useEffect(() => {
@@ -166,10 +171,8 @@ export default function MapView({ onNavigateRegister }) {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Search by Map</h1>
-        <p className="page-subtitle">
-          Click a location to generate its ULPIN and GPS coordinates
-        </p>
+        <h1 className="page-title">{t('map.title')}</h1>
+        <p className="page-subtitle">{t('map.subtitle')}</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16, height: 520 }}>
@@ -192,10 +195,10 @@ export default function MapView({ onNavigateRegister }) {
             }}>
               <div style={{ fontSize: 36, opacity: 0.18 }}>◎</div>
               <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.65 }}>
-                Click anywhere on the map to identify a land parcel and generate its ULPIN
+                {t('map.emptyHint1')}
               </p>
               <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                ULPIN is derived from reverse-geocoded state and district codes
+                {t('map.emptyHint2')}
               </p>
             </div>
           )}
@@ -204,16 +207,16 @@ export default function MapView({ onNavigateRegister }) {
             <>
               <div className="card" style={{ padding: '16px 18px' }}>
                 <div className="card-title" style={{ marginBottom: 13 }}>
-                  <span>⌖</span> Selected Location
+                  <span>⌖</span> {t('map.selectedLocation')}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 12 }}>
                   <div className="record-field">
-                    <span className="record-label">Latitude</span>
+                    <span className="record-label">{t('map.latitude')}</span>
                     <span className="record-value mono">{clicked.lat.toFixed(6)}</span>
                   </div>
                   <div className="record-field">
-                    <span className="record-label">Longitude</span>
+                    <span className="record-label">{t('map.longitude')}</span>
                     <span className="record-value mono">{clicked.lng.toFixed(6)}</span>
                   </div>
                 </div>
@@ -221,7 +224,7 @@ export default function MapView({ onNavigateRegister }) {
                 {loading && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--text-muted)' }}>
                     <span className="spinner" style={{ borderColor: 'rgba(15,45,90,.2)', borderTopColor: 'var(--navy)' }} />
-                    Reverse geocoding...
+                    {t('map.geocoding')}
                   </div>
                 )}
 
@@ -232,16 +235,16 @@ export default function MapView({ onNavigateRegister }) {
                 {geocode && !loading && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     <div className="record-field">
-                      <span className="record-label">State</span>
-                      <span className="record-value">{geocode.state || 'Unknown'}</span>
+                      <span className="record-label">{t('map.state')}</span>
+                      <span className="record-value">{geocode.state || t('map.unknown')}</span>
                     </div>
                     <div className="record-field">
-                      <span className="record-label">District</span>
-                      <span className="record-value">{geocode.district || geocode.city || 'Unknown'}</span>
+                      <span className="record-label">{t('map.district')}</span>
+                      <span className="record-value">{geocode.district || geocode.city || t('map.unknown')}</span>
                     </div>
                     {geocode.displayName && (
                       <div className="record-field">
-                        <span className="record-label" style={{ fontSize: 9 }}>Full Address</span>
+                        <span className="record-label" style={{ fontSize: 9 }}>{t('map.fullAddress')}</span>
                         <span style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>
                           {geocode.displayName.length > 120
                             ? geocode.displayName.slice(0, 120) + '…'
@@ -255,9 +258,9 @@ export default function MapView({ onNavigateRegister }) {
 
               {!loading && geocode && isIndia && (
                 <div className="card" style={{ padding: '16px 18px' }}>
-                <div className="card-title" style={{ marginBottom: 13 }}>
-                  <span>⊞</span> Generated ULPIN
-                </div>
+                  <div className="card-title" style={{ marginBottom: 13 }}>
+                    <span>⊞</span> {t('map.generatedUlpin')}
+                  </div>
 
                 <>
                   <div style={{
@@ -277,13 +280,13 @@ export default function MapView({ onNavigateRegister }) {
                       {ulpin}
                     </span>
                   </div>
-                  
-                  <p style={{ fontSize: 11.5, color: 'var(--text-muted)', marginBottom: 14 }}>
-                    Tap below to open the Register form with ULPIN and GPS pre-filled.
+
+                  <p style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>
+                    {t('map.tapHint')}
                   </p>
                   
                   <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleFillRegister}>
-                    Fill Register Form
+                    {t('map.fillBtn')}
                   </button>
                 </>
                 </div>
@@ -307,7 +310,7 @@ export default function MapView({ onNavigateRegister }) {
       </div>
 
       <p style={{ marginTop: 10, fontSize: 11, color: 'var(--text-muted)' }}>
-        Map data © OpenStreetMap contributors. Geocoding by Nominatim.
+        {t('map.attribution')}
       </p>
     </>
   );

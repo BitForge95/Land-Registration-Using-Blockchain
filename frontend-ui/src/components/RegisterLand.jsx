@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { registerLand } from '../services/api';
 import LandRecord from './LandRecord';
 
@@ -11,6 +12,7 @@ const INITIAL_FORM = {
 };
 
 export default function RegisterLand() {
+  const { t } = useTranslation();
   const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -30,7 +32,7 @@ export default function RegisterLand() {
       setResult(data);
       setForm(INITIAL_FORM);
     } catch (err) {
-      setError(err.message || 'Transaction failed. Check Spring Boot logs.');
+      setError(err.message || t('register.failDefault'));
     } finally {
       setLoading(false);
     }
@@ -39,21 +41,19 @@ export default function RegisterLand() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Register Land Parcel</h1>
-        <p className="page-subtitle">
-          Submit a new land asset to the Hyperledger Fabric ledger
-        </p>
+        <h1 className="page-title">{t('register.title')}</h1>
+        <p className="page-subtitle">{t('register.subtitle')}</p>
       </div>
 
       <div className="card">
         <div className="card-title">
-          <span>⊕</span> Parcel Registration Form
+          <span>⊕</span> {t('register.cardTitle')}
         </div>
 
         <form onSubmit={onSubmit} className="form-grid">
           <div className="form-grid form-grid-2">
             <div className="form-field">
-              <label className="field-label">ULPIN *</label>
+              <label className="field-label">{t('register.ulpinLabel')}</label>
               <input
                 className="field-input mono"
                 name="ulpin"
@@ -62,11 +62,11 @@ export default function RegisterLand() {
                 placeholder="MP-JBP-2026-003"
                 required
               />
-              <span className="field-hint">Unique Land Parcel ID — must not already exist on ledger</span>
+              <span className="field-hint">{t('register.ulpinHint')}</span>
             </div>
 
             <div className="form-field">
-              <label className="field-label">Parent ULPIN</label>
+              <label className="field-label">{t('register.parentUlpinLabel')}</label>
               <input
                 className="field-input mono"
                 name="parentUlpin"
@@ -74,12 +74,12 @@ export default function RegisterLand() {
                 onChange={onChange}
                 placeholder="NONE"
               />
-              <span className="field-hint">Leave as NONE for a root (unsplit) parcel</span>
+              <span className="field-hint">{t('register.parentUlpinHint')}</span>
             </div>
           </div>
 
           <div className="form-field">
-            <label className="field-label">GPS Coordinates *</label>
+            <label className="field-label">{t('register.gpsLabel')}</label>
             <input
               className="field-input mono"
               name="gpsCoordinates"
@@ -91,7 +91,7 @@ export default function RegisterLand() {
           </div>
 
           <div className="form-field">
-            <label className="field-label">Owner Aadhaar ID *</label>
+            <label className="field-label">{t('register.ownerLabel')}</label>
             <input
               className="field-input"
               name="currentOwnerId"
@@ -103,7 +103,7 @@ export default function RegisterLand() {
           </div>
 
           <div className="form-field">
-            <label className="field-label">Document Hash (IPFS CID / SHA-256) *</label>
+            <label className="field-label">{t('register.docHashLabel')}</label>
             <input
               className="field-input mono"
               name="documentHash"
@@ -112,7 +112,7 @@ export default function RegisterLand() {
               placeholder="QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco"
               required
             />
-            <span className="field-hint">SHA-256 hash or IPFS CID of the physical deed document</span>
+            <span className="field-hint">{t('register.docHashHint')}</span>
           </div>
 
           <button
@@ -122,16 +122,16 @@ export default function RegisterLand() {
             style={{ marginTop: 4 }}
           >
             {loading ? (
-              <><span className="spinner" /> Submitting to Ledger...</>
+              <><span className="spinner" /> {t('register.submitting')}</>
             ) : (
-              'Register on Ledger'
+              t('register.submitBtn')
             )}
           </button>
         </form>
 
         {result && (
           <div className="alert alert-success fade-in" style={{ marginTop: 16 }}>
-            Asset registered successfully.
+            {t('register.success')}
           </div>
         )}
 

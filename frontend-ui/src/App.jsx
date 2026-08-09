@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import RegisterLand from './components/RegisterLand';
 import SearchLand from './components/SearchLand';
 import OwnerSearch from './components/OwnerSearch';
@@ -6,21 +7,23 @@ import TransferLand from './components/TransferLand';
 import MutateLand from './components/MutateLand';
 import AssetHistory from './components/AssetHistory';
 import MapView from "./components/Mapview";
+import LanguageSwitcher from './components/LanguageSwitcher';
 import './index.css';
 
-const NAV_ITEMS = [
-  { id: 'register', label: 'Register Parcel', icon: '⊕' },
-  { id: 'search', label: 'Search by ULPIN', icon: '◎' },
-  { id: 'owner', label: 'Search by Owner', icon: '◈' },
-  { id: 'map', label: 'Search by Map', icon: '⊞' },
-  { id: 'transfer', label: 'Transfer Ownership', icon: '⇌' },
-  { id: 'mutate', label: 'Mutate / Split', icon: '⊗' },
-  { id: 'history', label: 'Audit Trail', icon: '◷' },
-];
-
 export default function App() {
+  const { t } = useTranslation();
   const [active, setActive] = useState('register');
   const [prefill, setPrefill] = useState(null);
+
+  const NAV_ITEMS = [
+    { id: 'register', label: t('nav.register'), icon: '⊕' },
+    { id: 'search', label: t('nav.search'), icon: '◎' },
+    { id: 'owner', label: t('nav.owner'), icon: '◈' },
+    { id: 'map', label: t('nav.map'), icon: '⊞' },
+    { id: 'transfer', label: t('nav.transfer'), icon: '⇌' },
+    { id: 'mutate', label: t('nav.mutate'), icon: '⊗' },
+    { id: 'history', label: t('nav.history'), icon: '◷' },
+  ];
 
   const navigateTo = (page, data = null) => {
     setPrefill(data);
@@ -46,12 +49,12 @@ export default function App() {
         <div className="tricolor-bar" />
         <div className="sidebar-logo">
           <div className="logo-emblem">⊛</div>
-          <div className="logo-name">BHUMI REGISTRY</div>
-          <div className="logo-dept">Ministry of Rural Development</div>
+          <div className="logo-name">{t('app.title')}</div>
+          <div className="logo-dept">{t('app.dept')}</div>
         </div>
 
         <nav className="sidebar-nav">
-          <div className="nav-section-label">Operations</div>
+          <div className="nav-section-label">{t('nav.section')}</div>
           {NAV_ITEMS.map(({ id, label, icon }) => (
             <div
               key={id}
@@ -65,9 +68,10 @@ export default function App() {
         </nav>
 
         <div className="sidebar-footer">
+          <LanguageSwitcher />
           <div className="network-status">
             <div className="status-dot" />
-            <span>Fabric · landchannel</span>
+            <span>{t('app.network')}</span>
           </div>
         </div>
       </aside>

@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "ભૂમિ રજિસ્ટ્રી",
+    "dept": "ગ્રામીણ વિકાસ મંત્રાલય",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "કામગીરી",
+    "register": "જમીન નોંધણી",
+    "search": "ULPIN દ્વારા શોધો",
+    "owner": "માલિક દ્વારા શોધો",
+    "map": "નકશા દ્વારા શોધો",
+    "transfer": "માલિકી હસ્તાંતરણ",
+    "mutate": "મ્યુટેશન / વિભાજન",
+    "history": "ઓડિટ ટ્રેલ"
+  },
+  "language": {
+    "label": "ભાષા"
+  },
+  "common": {
+    "queryLedger": "લેજર ક્વેરી કરો"
+  },
+  "search": {
+    "title": "ULPIN દ્વારા શોધો",
+    "subtitle": "ચોક્કસ અનન્ય જમીન પ્લોટ ઓળખ નંબર માટે વર્લ્ડ સ્ટેટ ક્વેરી કરો",
+    "cardTitle": "ULPIN શોધ",
+    "placeholder": "દા.ત. MP-JBP-2026-003",
+    "notFound": "ULPIN માટે કોઈ સંપત્તિ મળી નથી: {{ulpin}}",
+    "queryFailed": "લેજર ક્વેરી નિષ્ફળ: {{message}}"
+  },
+  "owner": {
+    "title": "માલિક દ્વારા શોધો",
+    "subtitle": "CouchDB રિચ ક્વેરી — આધાર આઈડી પર નોંધાયેલ તમામ જમીન સંપત્તિઓ પરત કરે છે",
+    "cardTitle": "માલિક શોધ",
+    "placeholder": "દા.ત. AADHAR-1122-3344",
+    "queryFailed": "ક્વેરી નિષ્ફળ: {{message}}",
+    "noneFound": "આ માલિક આઈડી માટે કોઈ જમીન સંપત્તિ મળી નથી.",
+    "foundCount_one": "{{ownerId}} ના નામે નોંધાયેલ {{count}} સંપત્તિ મળી",
+    "foundCount_other": "{{ownerId}} ના નામે નોંધાયેલ {{count}} સંપત્તિઓ મળી"
+  },
+  "register": {
+    "title": "જમીન પ્લોટ નોંધો",
+    "subtitle": "Hyperledger Fabric લેજરમાં નવી જમીન સંપત્તિ સબમિટ કરો",
+    "cardTitle": "પ્લોટ નોંધણી ફોર્મ",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "અનન્ય જમીન પ્લોટ આઈડી — લેજર પર પહેલેથી અસ્તિત્વમાં ન હોવો જોઈએ",
+    "parentUlpinLabel": "મૂળ ULPIN",
+    "parentUlpinHint": "મૂળ (અવિભાજિત) પ્લોટ માટે NONE રાખો",
+    "gpsLabel": "GPS કો-ઓર્ડિનેટ્સ *",
+    "ownerLabel": "માલિક આધાર આઈડી *",
+    "docHashLabel": "દસ્તાવેજ હેશ (IPFS CID / SHA-256) *",
+    "docHashHint": "ભૌતિક દસ્તાવેજનો SHA-256 હેશ અથવા IPFS CID",
+    "submitting": "લેજર પર સબમિટ થઈ રહ્યું છે...",
+    "submitBtn": "લેજર પર નોંધો",
+    "success": "સંપત્તિ સફળતાપૂર્વક નોંધાઈ.",
+    "failDefault": "ટ્રાન્ઝેક્શન નિષ્ફળ. Spring Boot લોગ તપાસો."
+  },
+  "transfer": {
+    "title": "માલિકી હસ્તાંતરણ",
+    "subtitle": "બ્લોકચેન પર માલિકી હસ્તાંતરણ ટ્રાન્ઝેક્શન અમલમાં મૂકો",
+    "knownIssue": "<0>જાણીતી બેકએન્ડ સમસ્યા:</0> વર્તમાન બેકએન્ડ સેવા ચેઇનકોડને <1>sellerId</1> અને <2>newDocumentHash</2> માટે ખાલી સ્ટ્રિંગ મોકલે છે, જેને ચેઇનકોડ ફરજિયાત ફિલ્ડ તરીકે ચકાસી ટ્રાન્ઝેક્શન નકારે છે. આ ફિલ્ડ આગળ મોકલવા <3>LandRegistryService.transferOwnership()</3> અપડેટ કરો. તે ફિક્સ આવે ત્યાં સુધી આ ફોર્મ તેમને તૈયાર મોકલે છે.",
+    "cardTitle": "માલિકી હસ્તાંતરણ ફોર્મ",
+    "ulpinLabel": "લક્ષ્ય ULPIN *",
+    "ulpinHint": "હસ્તાંતરિત થઈ રહેલો પ્લોટ — ACTIVE હોવો જોઈએ",
+    "sellerLabel": "વિક્રેતા (વર્તમાન માલિક) આધાર *",
+    "sellerHint": "લેજર પરના currentOwnerId સાથે મેળ ખાવો જોઈએ",
+    "newOwnerLabel": "નવો માલિક આધાર *",
+    "newDocHashLabel": "નવો દસ્તાવેજ હેશ *",
+    "newDocHashHint": "માલિકી બદલાયા પછી અપડેટ થયેલ દસ્તાવેજ હેશ",
+    "executing": "હસ્તાંતરણ અમલમાં આવી રહ્યું છે...",
+    "submitBtn": "લેજર પર હસ્તાંતરણ અમલમાં મૂકો",
+    "success": "માલિકી સફળતાપૂર્વક હસ્તાંતરિત થઈ.",
+    "failDefault": "હસ્તાંતરણ નિષ્ફળ. વિગતો માટે Spring Boot લોગ તપાસો."
+  },
+  "mutate": {
+    "title": "મ્યુટેશન / પ્લોટ વિભાજન",
+    "subtitle": "મૂળ પ્લોટને નિવૃત્ત કરી તેમાંથી બે પેટા-પ્લોટ બનાવો",
+    "knownIssue": "<0>જાણીતી બેકએન્ડ સમસ્યા:</0> બેકએન્ડ સેવા હાલમાં ચેઇનકોડના <1>mutateLand</1> ફંક્શનને ફક્ત 5 આર્ગ્યુમેન્ટ મોકલે છે, જ્યારે તેને 7ની જરૂર છે (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash). આ endpoint વાપરતા પહેલા બધા 7 પેરામીટર્સ મોકલવા <2>LandRegistryService.mutateLand()</2> અને <3>MutateRequest</3> DTO અપડેટ કરો.",
+    "cardTitle": "પ્લોટ મ્યુટેશન ફોર્મ",
+    "parentUlpinLabel": "મૂળ ULPIN *",
+    "parentUlpinHint": "વિભાજિત થનાર પ્લોટ — તે RETIRED_MUTATED તરીકે નિવૃત્ત થશે",
+    "currentOwnerLabel": "વર્તમાન માલિક આધાર *",
+    "childALabel": "પેટા-પ્લોટ A",
+    "childBLabel": "પેટા-પ્લોટ B",
+    "child1UlpinLabel": "પેટા-પ્લોટ 1 ULPIN *",
+    "child1GpsLabel": "પેટા-પ્લોટ 1 GPS *",
+    "child2UlpinLabel": "પેટા-પ્લોટ 2 ULPIN *",
+    "child2GpsLabel": "પેટા-પ્લોટ 2 GPS *",
+    "newDocHashLabel": "નવો દસ્તાવેજ હેશ *",
+    "newDocHashHint": "વિભાજન દર્શાવતો અપડેટ થયેલ સર્વે દસ્તાવેજ",
+    "executing": "મ્યુટેશન અમલમાં આવી રહ્યું છે...",
+    "submitBtn": "પ્લોટ વિભાજન અમલમાં મૂકો",
+    "failDefault": "મ્યુટેશન નિષ્ફળ. વિગતો માટે Spring Boot લોગ તપાસો."
+  },
+  "history": {
+    "title": "અપરિવર્તનીય ઓડિટ ટ્રેલ",
+    "subtitle": "સંપત્તિ માટે ક્રિપ્ટોગ્રાફિક લેજર ઇતિહાસ ક્વેરી કરો.",
+    "ulpinLabel": "સંપત્તિ ULPIN",
+    "querying": "લેજર ક્વેરી થઈ રહ્યું છે...",
+    "submitBtn": "ઉદ્ભવ શોધો",
+    "failDefault": "બ્લોકચેન પરથી ઓડિટ ટ્રેલ મેળવવામાં નિષ્ફળ.",
+    "ledgerRecords": "લેજર રેકોર્ડ્સ",
+    "txId": "ટ્રાન્ઝેક્શન આઈડી:",
+    "deleted": "સંપત્તિ કાઢી નાખવામાં આવી (મ્યુટેટેડ)",
+    "ownerId": "માલિક આઈડી:",
+    "status": "સ્થિતિ:"
+  },
+  "record": {
+    "currentOwner": "વર્તમાન માલિક",
+    "gps": "GPS કો-ઓર્ડિનેટ્સ",
+    "parentUlpin": "મૂળ ULPIN",
+    "noneRoot": "કંઈ નહીં (મૂળ સંપત્તિ)",
+    "docHash": "દસ્તાવેજ હેશ (IPFS / SHA-256)",
+    "footer": "અપરિવર્તનીય રેકોર્ડ · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "નકશા દ્વારા શોધો",
+    "subtitle": "તેનું ULPIN અને GPS કો-ઓર્ડિનેટ્સ બનાવવા માટે કોઈ સ્થાન પર ક્લિક કરો",
+    "emptyHint1": "જમીન પ્લોટ ઓળખી તેનું ULPIN બનાવવા માટે નકશા પર ગમે ત્યાં ક્લિક કરો",
+    "emptyHint2": "ULPIN રિવર્સ-જિયોકોડેડ રાજ્ય અને જિલ્લા કોડ પરથી મેળવવામાં આવે છે",
+    "selectedLocation": "પસંદ કરેલ સ્થાન",
+    "latitude": "અક્ષાંશ",
+    "longitude": "રેખાંશ",
+    "geocoding": "રિવર્સ જિયોકોડિંગ થઈ રહ્યું છે...",
+    "geocodeFailed": "રિવર્સ જિયોકોડિંગ નિષ્ફળ. તમારું જોડાણ તપાસો.",
+    "state": "રાજ્ય",
+    "district": "જિલ્લો",
+    "unknown": "અજ્ઞાત",
+    "fullAddress": "સંપૂર્ણ સરનામું",
+    "generatedUlpin": "બનાવેલ ULPIN",
+    "tapHint": "ULPIN અને GPS પહેલેથી ભરેલ નોંધણી ફોર્મ ખોલવા માટે નીચે ટેપ કરો.",
+    "fillBtn": "નોંધણી ફોર્મ ભરો",
+    "attribution": "નકશા ડેટા © OpenStreetMap યોગદાનકર્તાઓ. જિયોકોડિંગ Nominatim દ્વારા."
+  }
+}

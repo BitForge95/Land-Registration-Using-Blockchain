@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "بھومی رجسٹری",
+    "dept": "وزارتِ دیہی ترقی",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "کارروائیاں",
+    "register": "زمین کا اندراج",
+    "search": "ULPIN سے تلاش کریں",
+    "owner": "مالک سے تلاش کریں",
+    "map": "نقشے سے تلاش کریں",
+    "transfer": "ملکیت کی منتقلی",
+    "mutate": "میوٹیشن / تقسیم",
+    "history": "آڈٹ ٹریل"
+  },
+  "language": {
+    "label": "زبان"
+  },
+  "common": {
+    "queryLedger": "لیجر سے استفسار کریں"
+  },
+  "search": {
+    "title": "ULPIN سے تلاش کریں",
+    "subtitle": "کسی درست منفرد زمین کے قطعے کے شناختی نمبر کے لیے ورلڈ اسٹیٹ سے استفسار کریں",
+    "cardTitle": "ULPIN تلاش",
+    "placeholder": "مثلاً MP-JBP-2026-003",
+    "notFound": "ULPIN کے لیے کوئی جائیداد نہیں ملی: {{ulpin}}",
+    "queryFailed": "لیجر استفسار ناکام ہوا: {{message}}"
+  },
+  "owner": {
+    "title": "مالک سے تلاش کریں",
+    "subtitle": "CouchDB رِچ کوئری — آدھار آئی ڈی پر رجسٹرڈ تمام زمین جائیدادیں واپس کرتی ہے",
+    "cardTitle": "مالک کی تلاش",
+    "placeholder": "مثلاً AADHAR-1122-3344",
+    "queryFailed": "استفسار ناکام ہوا: {{message}}",
+    "noneFound": "اس مالک آئی ڈی کے لیے کوئی زمین جائیداد نہیں ملی۔",
+    "foundCount_one": "{{ownerId}} کے نام درج {{count}} جائیداد ملی",
+    "foundCount_other": "{{ownerId}} کے نام درج {{count}} جائیدادیں ملیں"
+  },
+  "register": {
+    "title": "زمین کا قطعہ درج کریں",
+    "subtitle": "Hyperledger Fabric لیجر میں نئی زمین جائیداد جمع کروائیں",
+    "cardTitle": "قطعہ اندراج فارم",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "منفرد زمین قطعہ آئی ڈی — لیجر پر پہلے سے موجود نہیں ہونی چاہیے",
+    "parentUlpinLabel": "بنیادی ULPIN",
+    "parentUlpinHint": "بنیادی (غیر منقسم) قطعے کے لیے NONE چھوڑ دیں",
+    "gpsLabel": "GPS متناسقات *",
+    "ownerLabel": "مالک آدھار آئی ڈی *",
+    "docHashLabel": "دستاویز ہیش (IPFS CID / SHA-256) *",
+    "docHashHint": "اصل دستاویز کا SHA-256 ہیش یا IPFS CID",
+    "submitting": "لیجر پر جمع ہو رہا ہے...",
+    "submitBtn": "لیجر پر درج کریں",
+    "success": "جائیداد کامیابی سے درج ہو گئی۔",
+    "failDefault": "لین دین ناکام ہوا۔ Spring Boot لاگز چیک کریں۔"
+  },
+  "transfer": {
+    "title": "ملکیت کی منتقلی",
+    "subtitle": "بلاک چین پر ملکیت کی منتقلی کا لین دین انجام دیں",
+    "knownIssue": "<0>معلوم بیک اینڈ مسئلہ:</0> موجودہ بیک اینڈ سروس چین کوڈ کو <1>sellerId</1> اور <2>newDocumentHash</2> کے لیے خالی سٹرنگز بھیجتی ہے، جنہیں چین کوڈ لازمی فیلڈز کے طور پر جانچ کر لین دین مسترد کر دیتا ہے۔ یہ فیلڈز آگے بھیجنے کے لیے <3>LandRegistryService.transferOwnership()</3> کو اپ ڈیٹ کریں۔ یہ فارم اُس اصلاح کے آنے تک انہیں تیار بھیج دیتا ہے۔",
+    "cardTitle": "ملکیت کی منتقلی فارم",
+    "ulpinLabel": "ہدف ULPIN *",
+    "ulpinHint": "منتقل کیا جانے والا قطعہ — ACTIVE ہونا چاہیے",
+    "sellerLabel": "فروخت کنندہ (موجودہ مالک) آدھار *",
+    "sellerHint": "لیجر پر موجود currentOwnerId سے مطابقت رکھنی چاہیے",
+    "newOwnerLabel": "نیا مالک آدھار *",
+    "newDocHashLabel": "نئی دستاویز ہیش *",
+    "newDocHashHint": "ملکیت کی تبدیلی کے بعد اپ ڈیٹ شدہ دستاویز ہیش",
+    "executing": "منتقلی انجام دی جا رہی ہے...",
+    "submitBtn": "لیجر پر منتقلی انجام دیں",
+    "success": "ملکیت کامیابی سے منتقل ہو گئی۔",
+    "failDefault": "منتقلی ناکام ہوئی۔ تفصیلات کے لیے Spring Boot لاگز چیک کریں۔"
+  },
+  "mutate": {
+    "title": "میوٹیشن / قطعہ تقسیم",
+    "subtitle": "ایک بنیادی قطعے کو منسوخ کر کے اس سے دو ذیلی قطعے بنائیں",
+    "knownIssue": "<0>معلوم بیک اینڈ مسئلہ:</0> بیک اینڈ سروس فی الحال چین کوڈ کے <1>mutateLand</1> فنکشن کو صرف 5 آرگیومنٹس بھیجتی ہے، جبکہ اسے 7 درکار ہیں (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash)۔ اس اینڈ پوائنٹ کو استعمال کرنے سے پہلے تمام 7 پیرامیٹرز بھیجنے کے لیے <2>LandRegistryService.mutateLand()</2> اور <3>MutateRequest</3> DTO کو اپ ڈیٹ کریں۔",
+    "cardTitle": "قطعہ میوٹیشن فارم",
+    "parentUlpinLabel": "بنیادی ULPIN *",
+    "parentUlpinHint": "تقسیم کیا جانے والا قطعہ — اسے RETIRED_MUTATED کے طور پر منسوخ کیا جائے گا",
+    "currentOwnerLabel": "موجودہ مالک آدھار *",
+    "childALabel": "ذیلی قطعہ A",
+    "childBLabel": "ذیلی قطعہ B",
+    "child1UlpinLabel": "ذیلی قطعہ 1 ULPIN *",
+    "child1GpsLabel": "ذیلی قطعہ 1 GPS *",
+    "child2UlpinLabel": "ذیلی قطعہ 2 ULPIN *",
+    "child2GpsLabel": "ذیلی قطعہ 2 GPS *",
+    "newDocHashLabel": "نئی دستاویز ہیش *",
+    "newDocHashHint": "تقسیم کی عکاسی کرنے والی اپ ڈیٹ شدہ سروے دستاویز",
+    "executing": "میوٹیشن انجام دی جا رہی ہے...",
+    "submitBtn": "قطعہ تقسیم انجام دیں",
+    "failDefault": "میوٹیشن ناکام ہوئی۔ تفصیلات کے لیے Spring Boot لاگز چیک کریں۔"
+  },
+  "history": {
+    "title": "ناقابلِ تبدیل آڈٹ ٹریل",
+    "subtitle": "کسی جائیداد کے لیے کرپٹوگرافک لیجر تاریخ سے استفسار کریں۔",
+    "ulpinLabel": "جائیداد ULPIN",
+    "querying": "لیجر سے استفسار ہو رہا ہے...",
+    "submitBtn": "ماخذ معلوم کریں",
+    "failDefault": "بلاک چین سے آڈٹ ٹریل حاصل کرنے میں ناکامی۔",
+    "ledgerRecords": "لیجر ریکارڈز",
+    "txId": "لین دین آئی ڈی:",
+    "deleted": "جائیداد حذف کر دی گئی (میوٹیٹڈ)",
+    "ownerId": "مالک آئی ڈی:",
+    "status": "حیثیت:"
+  },
+  "record": {
+    "currentOwner": "موجودہ مالک",
+    "gps": "GPS متناسقات",
+    "parentUlpin": "بنیادی ULPIN",
+    "noneRoot": "کوئی نہیں (بنیادی جائیداد)",
+    "docHash": "دستاویز ہیش (IPFS / SHA-256)",
+    "footer": "ناقابلِ تبدیل ریکارڈ · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "نقشے سے تلاش کریں",
+    "subtitle": "اس کا ULPIN اور GPS متناسقات بنانے کے لیے کسی مقام پر کلک کریں",
+    "emptyHint1": "زمین کے قطعے کی شناخت اور اس کا ULPIN بنانے کے لیے نقشے پر کہیں بھی کلک کریں",
+    "emptyHint2": "ULPIN ریورس جیو کوڈڈ ریاست اور ضلعی کوڈز سے اخذ کیا جاتا ہے",
+    "selectedLocation": "منتخب مقام",
+    "latitude": "عرض بلد",
+    "longitude": "طول بلد",
+    "geocoding": "ریورس جیو کوڈنگ ہو رہی ہے...",
+    "geocodeFailed": "ریورس جیو کوڈنگ ناکام ہوئی۔ اپنا کنکشن چیک کریں۔",
+    "state": "ریاست",
+    "district": "ضلع",
+    "unknown": "نامعلوم",
+    "fullAddress": "مکمل پتہ",
+    "generatedUlpin": "تیار کردہ ULPIN",
+    "tapHint": "ULPIN اور GPS پہلے سے بھرے ہوئے اندراج فارم کو کھولنے کے لیے نیچے ٹیپ کریں۔",
+    "fillBtn": "اندراج فارم بھریں",
+    "attribution": "نقشہ ڈیٹا © OpenStreetMap شراکت دار۔ جیو کوڈنگ Nominatim کے ذریعے۔"
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "ভূমি রেজিস্ট্রি",
+    "dept": "গ্রামীণ উন্নয়ন মন্ত্রক",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "কার্যক্রম",
+    "register": "জমি নিবন্ধন",
+    "search": "ULPIN দিয়ে খুঁজুন",
+    "owner": "মালিক দিয়ে খুঁজুন",
+    "map": "মানচিত্র দিয়ে খুঁজুন",
+    "transfer": "মালিকানা হস্তান্তর",
+    "mutate": "মিউটেশন / বিভাজন",
+    "history": "নিরীক্ষা ট্রেল"
+  },
+  "language": {
+    "label": "ভাষা"
+  },
+  "common": {
+    "queryLedger": "লেজার কোয়েরি করুন"
+  },
+  "search": {
+    "title": "ULPIN দিয়ে খুঁজুন",
+    "subtitle": "একটি সঠিক অনন্য জমি পার্সেল শনাক্তকরণ নম্বরের জন্য ওয়ার্ল্ড স্টেট কোয়েরি করুন",
+    "cardTitle": "ULPIN অনুসন্ধান",
+    "placeholder": "যেমন MP-JBP-2026-003",
+    "notFound": "ULPIN-এর জন্য কোনো সম্পত্তি পাওয়া যায়নি: {{ulpin}}",
+    "queryFailed": "লেজার কোয়েরি ব্যর্থ হয়েছে: {{message}}"
+  },
+  "owner": {
+    "title": "মালিক দিয়ে খুঁজুন",
+    "subtitle": "CouchDB রিচ কোয়েরি — একটি আধার আইডিতে নিবন্ধিত সমস্ত জমি সম্পত্তি প্রদান করে",
+    "cardTitle": "মালিক অনুসন্ধান",
+    "placeholder": "যেমন AADHAR-1122-3344",
+    "queryFailed": "কোয়েরি ব্যর্থ হয়েছে: {{message}}",
+    "noneFound": "এই মালিক আইডির জন্য কোনো জমি সম্পত্তি পাওয়া যায়নি।",
+    "foundCount_one": "{{ownerId}}-এর নামে নিবন্ধিত {{count}}টি সম্পত্তি পাওয়া গেছে",
+    "foundCount_other": "{{ownerId}}-এর নামে নিবন্ধিত {{count}}টি সম্পত্তি পাওয়া গেছে"
+  },
+  "register": {
+    "title": "জমির পার্সেল নিবন্ধন করুন",
+    "subtitle": "Hyperledger Fabric লেজারে একটি নতুন জমি সম্পত্তি জমা দিন",
+    "cardTitle": "পার্সেল নিবন্ধন ফর্ম",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "অনন্য জমি পার্সেল আইডি — লেজারে ইতিমধ্যে থাকা উচিত নয়",
+    "parentUlpinLabel": "মূল ULPIN",
+    "parentUlpinHint": "মূল (অবিভক্ত) পার্সেলের জন্য NONE রাখুন",
+    "gpsLabel": "GPS স্থানাঙ্ক *",
+    "ownerLabel": "মালিকের আধার আইডি *",
+    "docHashLabel": "নথি হ্যাশ (IPFS CID / SHA-256) *",
+    "docHashHint": "প্রকৃত দলিল নথির SHA-256 হ্যাশ বা IPFS CID",
+    "submitting": "লেজারে জমা হচ্ছে...",
+    "submitBtn": "লেজারে নিবন্ধন করুন",
+    "success": "সম্পত্তি সফলভাবে নিবন্ধিত হয়েছে।",
+    "failDefault": "লেনদেন ব্যর্থ হয়েছে। Spring Boot লগ পরীক্ষা করুন।"
+  },
+  "transfer": {
+    "title": "মালিকানা হস্তান্তর",
+    "subtitle": "ব্লকচেইনে একটি মালিকানা হস্তান্তর লেনদেন সম্পাদন করুন",
+    "knownIssue": "<0>জানা ব্যাকএন্ড সমস্যা:</0> বর্তমান ব্যাকএন্ড পরিষেবা চেইনকোডে <1>sellerId</1> এবং <2>newDocumentHash</2>-এর জন্য খালি স্ট্রিং পাঠায়, যা চেইনকোড আবশ্যক ক্ষেত্র হিসেবে যাচাই করে লেনদেন প্রত্যাখ্যান করে। এই ক্ষেত্রগুলো পাঠাতে <3>LandRegistryService.transferOwnership()</3> আপডেট করুন। এই ফর্ম সেই ফিক্স আসার জন্য প্রস্তুত করে ক্ষেত্রগুলো পাঠায়।",
+    "cardTitle": "মালিকানা হস্তান্তর ফর্ম",
+    "ulpinLabel": "লক্ষ্য ULPIN *",
+    "ulpinHint": "যে পার্সেল হস্তান্তরিত হচ্ছে — ACTIVE হতে হবে",
+    "sellerLabel": "বিক্রেতা (বর্তমান মালিক) আধার *",
+    "sellerHint": "লেজারের currentOwnerId-এর সাথে মিলতে হবে",
+    "newOwnerLabel": "নতুন মালিক আধার *",
+    "newDocHashLabel": "নতুন নথি হ্যাশ *",
+    "newDocHashHint": "মালিকানা পরিবর্তনের পর আপডেট করা দলিল নথি হ্যাশ",
+    "executing": "হস্তান্তর সম্পাদিত হচ্ছে...",
+    "submitBtn": "লেজারে হস্তান্তর সম্পাদন করুন",
+    "success": "মালিকানা সফলভাবে হস্তান্তরিত হয়েছে।",
+    "failDefault": "হস্তান্তর ব্যর্থ হয়েছে। বিস্তারিত জানতে Spring Boot লগ পরীক্ষা করুন।"
+  },
+  "mutate": {
+    "title": "মিউটেশন / পার্সেল বিভাজন",
+    "subtitle": "একটি মূল পার্সেল অবসৃত করে তা থেকে দুটি উপ-পার্সেল তৈরি করুন",
+    "knownIssue": "<0>জানা ব্যাকএন্ড সমস্যা:</0> ব্যাকএন্ড পরিষেবা বর্তমানে চেইনকোডের <1>mutateLand</1> ফাংশনে মাত্র ৫টি আর্গুমেন্ট পাঠায়, অথচ এর ৭টি প্রয়োজন (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash)। এই এন্ডপয়েন্ট ব্যবহারের আগে সবকটি ৭টি প্যারামিটার পাঠাতে <2>LandRegistryService.mutateLand()</2> এবং <3>MutateRequest</3> DTO আপডেট করুন।",
+    "cardTitle": "পার্সেল মিউটেশন ফর্ম",
+    "parentUlpinLabel": "মূল ULPIN *",
+    "parentUlpinHint": "যে পার্সেল বিভক্ত হবে — এটি RETIRED_MUTATED হিসেবে অবসৃত হবে",
+    "currentOwnerLabel": "বর্তমান মালিক আধার *",
+    "childALabel": "উপ-পার্সেল A",
+    "childBLabel": "উপ-পার্সেল B",
+    "child1UlpinLabel": "উপ-পার্সেল ১ ULPIN *",
+    "child1GpsLabel": "উপ-পার্সেল ১ GPS *",
+    "child2UlpinLabel": "উপ-পার্সেল ২ ULPIN *",
+    "child2GpsLabel": "উপ-পার্সেল ২ GPS *",
+    "newDocHashLabel": "নতুন নথি হ্যাশ *",
+    "newDocHashHint": "বিভাজন প্রতিফলিত করে আপডেট করা জরিপ দলিল",
+    "executing": "মিউটেশন সম্পাদিত হচ্ছে...",
+    "submitBtn": "পার্সেল বিভাজন সম্পাদন করুন",
+    "failDefault": "মিউটেশন ব্যর্থ হয়েছে। বিস্তারিত জানতে Spring Boot লগ পরীক্ষা করুন।"
+  },
+  "history": {
+    "title": "অপরিবর্তনীয় নিরীক্ষা ট্রেল",
+    "subtitle": "একটি সম্পত্তির জন্য ক্রিপ্টোগ্রাফিক লেজার ইতিহাস কোয়েরি করুন।",
+    "ulpinLabel": "সম্পত্তির ULPIN",
+    "querying": "লেজার কোয়েরি হচ্ছে...",
+    "submitBtn": "উৎস সন্ধান করুন",
+    "failDefault": "ব্লকচেইন থেকে নিরীক্ষা ট্রেল আনতে ব্যর্থ হয়েছে।",
+    "ledgerRecords": "লেজার রেকর্ড",
+    "txId": "লেনদেন আইডি:",
+    "deleted": "সম্পত্তি মুছে ফেলা হয়েছে (মিউটেটেড)",
+    "ownerId": "মালিক আইডি:",
+    "status": "অবস্থা:"
+  },
+  "record": {
+    "currentOwner": "বর্তমান মালিক",
+    "gps": "GPS স্থানাঙ্ক",
+    "parentUlpin": "মূল ULPIN",
+    "noneRoot": "কোনোটিই নয় (মূল সম্পত্তি)",
+    "docHash": "নথি হ্যাশ (IPFS / SHA-256)",
+    "footer": "অপরিবর্তনীয় রেকর্ড · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "মানচিত্র দিয়ে খুঁজুন",
+    "subtitle": "এর ULPIN এবং GPS স্থানাঙ্ক তৈরি করতে একটি স্থানে ক্লিক করুন",
+    "emptyHint1": "একটি জমির পার্সেল শনাক্ত করে তার ULPIN তৈরি করতে মানচিত্রে যেকোনো জায়গায় ক্লিক করুন",
+    "emptyHint2": "ULPIN রিভার্স-জিওকোডেড রাজ্য ও জেলা কোড থেকে তৈরি হয়",
+    "selectedLocation": "নির্বাচিত অবস্থান",
+    "latitude": "অক্ষাংশ",
+    "longitude": "দ্রাঘিমাংশ",
+    "geocoding": "রিভার্স জিওকোডিং হচ্ছে...",
+    "geocodeFailed": "রিভার্স জিওকোডিং ব্যর্থ হয়েছে। আপনার সংযোগ পরীক্ষা করুন।",
+    "state": "রাজ্য",
+    "district": "জেলা",
+    "unknown": "অজানা",
+    "fullAddress": "সম্পূর্ণ ঠিকানা",
+    "generatedUlpin": "তৈরি করা ULPIN",
+    "tapHint": "ULPIN এবং GPS পূর্ব-পূরণ করা নিবন্ধন ফর্ম খুলতে নিচে ট্যাপ করুন।",
+    "fillBtn": "নিবন্ধন ফর্ম পূরণ করুন",
+    "attribution": "মানচিত্র তথ্য © OpenStreetMap অবদানকারীগণ। জিওকোডিং Nominatim দ্বারা।"
+  }
+}

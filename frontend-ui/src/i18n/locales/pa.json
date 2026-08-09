@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "ਭੂਮੀ ਰਜਿਸਟਰੀ",
+    "dept": "ਗ੍ਰਾਮੀਣ ਵਿਕਾਸ ਮੰਤਰਾਲਾ",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "ਕਾਰਵਾਈਆਂ",
+    "register": "ਜ਼ਮੀਨ ਰਜਿਸਟਰ ਕਰੋ",
+    "search": "ULPIN ਨਾਲ ਖੋਜੋ",
+    "owner": "ਮਾਲਕ ਨਾਲ ਖੋਜੋ",
+    "map": "ਨਕਸ਼ੇ ਨਾਲ ਖੋਜੋ",
+    "transfer": "ਮਾਲਕੀ ਤਬਾਦਲਾ",
+    "mutate": "ਮਿਊਟੇਸ਼ਨ / ਵੰਡ",
+    "history": "ਆਡਿਟ ਟ੍ਰੇਲ"
+  },
+  "language": {
+    "label": "ਭਾਸ਼ਾ"
+  },
+  "common": {
+    "queryLedger": "ਲੈਜਰ ਕਿਊਰੀ ਕਰੋ"
+  },
+  "search": {
+    "title": "ULPIN ਨਾਲ ਖੋਜੋ",
+    "subtitle": "ਸਹੀ ਵਿਲੱਖਣ ਜ਼ਮੀਨ ਪਾਰਸਲ ਪਛਾਣ ਨੰਬਰ ਲਈ world state ਕਿਊਰੀ ਕਰੋ",
+    "cardTitle": "ULPIN ਖੋਜ",
+    "placeholder": "ਜਿਵੇਂ MP-JBP-2026-003",
+    "notFound": "ULPIN ਲਈ ਕੋਈ ਸੰਪਤੀ ਨਹੀਂ ਮਿਲੀ: {{ulpin}}",
+    "queryFailed": "ਲੈਜਰ ਕਿਊਰੀ ਅਸਫਲ ਰਹੀ: {{message}}"
+  },
+  "owner": {
+    "title": "ਮਾਲਕ ਨਾਲ ਖੋਜੋ",
+    "subtitle": "CouchDB ਰਿੱਚ ਕਿਊਰੀ — ਇੱਕ ਆਧਾਰ ਆਈਡੀ ਉੱਤੇ ਰਜਿਸਟਰਡ ਸਾਰੀਆਂ ਜ਼ਮੀਨ ਸੰਪਤੀਆਂ ਵਾਪਸ ਕਰਦੀ ਹੈ",
+    "cardTitle": "ਮਾਲਕ ਖੋਜ",
+    "placeholder": "ਜਿਵੇਂ AADHAR-1122-3344",
+    "queryFailed": "ਕਿਊਰੀ ਅਸਫਲ ਰਹੀ: {{message}}",
+    "noneFound": "ਇਸ ਮਾਲਕ ਆਈਡੀ ਲਈ ਕੋਈ ਜ਼ਮੀਨ ਸੰਪਤੀ ਨਹੀਂ ਮਿਲੀ।",
+    "foundCount_one": "{{ownerId}} ਦੇ ਨਾਮ ਰਜਿਸਟਰਡ {{count}} ਸੰਪਤੀ ਮਿਲੀ",
+    "foundCount_other": "{{ownerId}} ਦੇ ਨਾਮ ਰਜਿਸਟਰਡ {{count}} ਸੰਪਤੀਆਂ ਮਿਲੀਆਂ"
+  },
+  "register": {
+    "title": "ਜ਼ਮੀਨ ਪਾਰਸਲ ਰਜਿਸਟਰ ਕਰੋ",
+    "subtitle": "Hyperledger Fabric ਲੈਜਰ ਵਿੱਚ ਨਵੀਂ ਜ਼ਮੀਨ ਸੰਪਤੀ ਜਮ੍ਹਾਂ ਕਰੋ",
+    "cardTitle": "ਪਾਰਸਲ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਫਾਰਮ",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "ਵਿਲੱਖਣ ਜ਼ਮੀਨ ਪਾਰਸਲ ਆਈਡੀ — ਲੈਜਰ ਉੱਤੇ ਪਹਿਲਾਂ ਤੋਂ ਮੌਜੂਦ ਨਹੀਂ ਹੋਣੀ ਚਾਹੀਦੀ",
+    "parentUlpinLabel": "ਮੂਲ ULPIN",
+    "parentUlpinHint": "ਮੂਲ (ਅਣ-ਵੰਡੇ) ਪਾਰਸਲ ਲਈ NONE ਛੱਡ ਦਿਓ",
+    "gpsLabel": "GPS ਨਿਰਦੇਸ਼ ਅੰਕ *",
+    "ownerLabel": "ਮਾਲਕ ਆਧਾਰ ਆਈਡੀ *",
+    "docHashLabel": "ਦਸਤਾਵੇਜ਼ ਹੈਸ਼ (IPFS CID / SHA-256) *",
+    "docHashHint": "ਭੌਤਿਕ ਦਸਤਾਵੇਜ਼ ਦਾ SHA-256 ਹੈਸ਼ ਜਾਂ IPFS CID",
+    "submitting": "ਲੈਜਰ ਵਿੱਚ ਜਮ੍ਹਾਂ ਹੋ ਰਿਹਾ ਹੈ...",
+    "submitBtn": "ਲੈਜਰ ਉੱਤੇ ਰਜਿਸਟਰ ਕਰੋ",
+    "success": "ਸੰਪਤੀ ਸਫਲਤਾਪੂਰਵਕ ਰਜਿਸਟਰ ਹੋ ਗਈ।",
+    "failDefault": "ਲੈਣ-ਦੇਣ ਅਸਫਲ ਰਿਹਾ। Spring Boot ਲੌਗ ਜਾਂਚੋ।"
+  },
+  "transfer": {
+    "title": "ਮਾਲਕੀ ਤਬਾਦਲਾ",
+    "subtitle": "ਬਲਾਕਚੇਨ ਉੱਤੇ ਮਾਲਕੀ ਤਬਾਦਲਾ ਲੈਣ-ਦੇਣ ਲਾਗੂ ਕਰੋ",
+    "knownIssue": "<0>ਜਾਣੀ-ਪਛਾਣੀ ਬੈਕਐਂਡ ਸਮੱਸਿਆ:</0> ਮੌਜੂਦਾ ਬੈਕਐਂਡ ਸੇਵਾ ਚੇਨਕੋਡ ਨੂੰ <1>sellerId</1> ਅਤੇ <2>newDocumentHash</2> ਲਈ ਖਾਲੀ ਸਟ੍ਰਿੰਗਾਂ ਭੇਜਦੀ ਹੈ, ਜਿਨ੍ਹਾਂ ਨੂੰ ਚੇਨਕੋਡ ਲਾਜ਼ਮੀ ਖੇਤਰਾਂ ਵਜੋਂ ਤਸਦੀਕ ਕਰਕੇ ਲੈਣ-ਦੇਣ ਰੱਦ ਕਰ ਦਿੰਦਾ ਹੈ। ਇਹ ਖੇਤਰ ਅੱਗੇ ਭੇਜਣ ਲਈ <3>LandRegistryService.transferOwnership()</3> ਅੱਪਡੇਟ ਕਰੋ। ਇਹ ਫਾਰਮ ਉਸ ਫਿਕਸ ਦੇ ਆਉਣ ਤੱਕ ਉਹਨਾਂ ਨੂੰ ਤਿਆਰ ਭੇਜਦਾ ਹੈ।",
+    "cardTitle": "ਮਾਲਕੀ ਤਬਾਦਲਾ ਫਾਰਮ",
+    "ulpinLabel": "ਟਿਕਾਣਾ ULPIN *",
+    "ulpinHint": "ਤਬਾਦਲਾ ਕੀਤਾ ਜਾ ਰਿਹਾ ਪਾਰਸਲ — ACTIVE ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ",
+    "sellerLabel": "ਵਿਕਰੇਤਾ (ਮੌਜੂਦਾ ਮਾਲਕ) ਆਧਾਰ *",
+    "sellerHint": "ਲੈਜਰ ਉੱਤੇ ਮੌਜੂਦ currentOwnerId ਨਾਲ ਮੇਲ ਖਾਣਾ ਚਾਹੀਦਾ ਹੈ",
+    "newOwnerLabel": "ਨਵਾਂ ਮਾਲਕ ਆਧਾਰ *",
+    "newDocHashLabel": "ਨਵਾਂ ਦਸਤਾਵੇਜ਼ ਹੈਸ਼ *",
+    "newDocHashHint": "ਮਾਲਕੀ ਬਦਲਣ ਤੋਂ ਬਾਅਦ ਅੱਪਡੇਟ ਕੀਤਾ ਦਸਤਾਵੇਜ਼ ਹੈਸ਼",
+    "executing": "ਤਬਾਦਲਾ ਲਾਗੂ ਹੋ ਰਿਹਾ ਹੈ...",
+    "submitBtn": "ਲੈਜਰ ਉੱਤੇ ਤਬਾਦਲਾ ਲਾਗੂ ਕਰੋ",
+    "success": "ਮਾਲਕੀ ਸਫਲਤਾਪੂਰਵਕ ਤਬਾਦਲਾ ਹੋ ਗਈ।",
+    "failDefault": "ਤਬਾਦਲਾ ਅਸਫਲ ਰਿਹਾ। ਵੇਰਵਿਆਂ ਲਈ Spring Boot ਲੌਗ ਜਾਂਚੋ।"
+  },
+  "mutate": {
+    "title": "ਮਿਊਟੇਸ਼ਨ / ਪਾਰਸਲ ਵੰਡ",
+    "subtitle": "ਇੱਕ ਮੂਲ ਪਾਰਸਲ ਨੂੰ ਸੇਵਾਮੁਕਤ ਕਰਕੇ ਇਸ ਤੋਂ ਦੋ ਉਪ-ਪਾਰਸਲ ਬਣਾਓ",
+    "knownIssue": "<0>ਜਾਣੀ-ਪਛਾਣੀ ਬੈਕਐਂਡ ਸਮੱਸਿਆ:</0> ਬੈਕਐਂਡ ਸੇਵਾ ਇਸ ਵੇਲੇ ਚੇਨਕੋਡ ਦੇ <1>mutateLand</1> ਫੰਕਸ਼ਨ ਨੂੰ ਸਿਰਫ਼ 5 ਆਰਗੂਮੈਂਟ ਭੇਜਦੀ ਹੈ, ਜਦਕਿ ਇਸਨੂੰ 7 ਦੀ ਲੋੜ ਹੈ (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash)। ਇਹ endpoint ਵਰਤਣ ਤੋਂ ਪਹਿਲਾਂ ਸਾਰੇ 7 ਪੈਰਾਮੀਟਰ ਭੇਜਣ ਲਈ <2>LandRegistryService.mutateLand()</2> ਅਤੇ <3>MutateRequest</3> DTO ਅੱਪਡੇਟ ਕਰੋ।",
+    "cardTitle": "ਪਾਰਸਲ ਮਿਊਟੇਸ਼ਨ ਫਾਰਮ",
+    "parentUlpinLabel": "ਮੂਲ ULPIN *",
+    "parentUlpinHint": "ਵੰਡਿਆ ਜਾਣ ਵਾਲਾ ਪਾਰਸਲ — ਇਹ RETIRED_MUTATED ਵਜੋਂ ਸੇਵਾਮੁਕਤ ਹੋਵੇਗਾ",
+    "currentOwnerLabel": "ਮੌਜੂਦਾ ਮਾਲਕ ਆਧਾਰ *",
+    "childALabel": "ਉਪ-ਪਾਰਸਲ A",
+    "childBLabel": "ਉਪ-ਪਾਰਸਲ B",
+    "child1UlpinLabel": "ਉਪ-ਪਾਰਸਲ 1 ULPIN *",
+    "child1GpsLabel": "ਉਪ-ਪਾਰਸਲ 1 GPS *",
+    "child2UlpinLabel": "ਉਪ-ਪਾਰਸਲ 2 ULPIN *",
+    "child2GpsLabel": "ਉਪ-ਪਾਰਸਲ 2 GPS *",
+    "newDocHashLabel": "ਨਵਾਂ ਦਸਤਾਵੇਜ਼ ਹੈਸ਼ *",
+    "newDocHashHint": "ਵੰਡ ਨੂੰ ਦਰਸਾਉਂਦਾ ਅੱਪਡੇਟ ਕੀਤਾ ਸਰਵੇਖਣ ਦਸਤਾਵੇਜ਼",
+    "executing": "ਮਿਊਟੇਸ਼ਨ ਲਾਗੂ ਹੋ ਰਹੀ ਹੈ...",
+    "submitBtn": "ਪਾਰਸਲ ਵੰਡ ਲਾਗੂ ਕਰੋ",
+    "failDefault": "ਮਿਊਟੇਸ਼ਨ ਅਸਫਲ ਰਹੀ। ਵੇਰਵਿਆਂ ਲਈ Spring Boot ਲੌਗ ਜਾਂਚੋ।"
+  },
+  "history": {
+    "title": "ਅਟੱਲ ਆਡਿਟ ਟ੍ਰੇਲ",
+    "subtitle": "ਕਿਸੇ ਸੰਪਤੀ ਲਈ ਕ੍ਰਿਪਟੋਗ੍ਰਾਫਿਕ ਲੈਜਰ ਇਤਿਹਾਸ ਕਿਊਰੀ ਕਰੋ।",
+    "ulpinLabel": "ਸੰਪਤੀ ULPIN",
+    "querying": "ਲੈਜਰ ਕਿਊਰੀ ਹੋ ਰਹੀ ਹੈ...",
+    "submitBtn": "ਮੂਲ ਦਾ ਪਤਾ ਲਗਾਓ",
+    "failDefault": "ਬਲਾਕਚੇਨ ਤੋਂ ਆਡਿਟ ਟ੍ਰੇਲ ਲਿਆਉਣ ਵਿੱਚ ਅਸਫਲ।",
+    "ledgerRecords": "ਲੈਜਰ ਰਿਕਾਰਡ",
+    "txId": "ਲੈਣ-ਦੇਣ ਆਈਡੀ:",
+    "deleted": "ਸੰਪਤੀ ਮਿਟਾ ਦਿੱਤੀ ਗਈ (ਮਿਊਟੇਟਿਡ)",
+    "ownerId": "ਮਾਲਕ ਆਈਡੀ:",
+    "status": "ਸਥਿਤੀ:"
+  },
+  "record": {
+    "currentOwner": "ਮੌਜੂਦਾ ਮਾਲਕ",
+    "gps": "GPS ਨਿਰਦੇਸ਼ ਅੰਕ",
+    "parentUlpin": "ਮੂਲ ULPIN",
+    "noneRoot": "ਕੋਈ ਨਹੀਂ (ਮੂਲ ਸੰਪਤੀ)",
+    "docHash": "ਦਸਤਾਵੇਜ਼ ਹੈਸ਼ (IPFS / SHA-256)",
+    "footer": "ਅਟੱਲ ਰਿਕਾਰਡ · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "ਨਕਸ਼ੇ ਨਾਲ ਖੋਜੋ",
+    "subtitle": "ਇਸਦਾ ULPIN ਅਤੇ GPS ਨਿਰਦੇਸ਼ ਅੰਕ ਬਣਾਉਣ ਲਈ ਕਿਸੇ ਟਿਕਾਣੇ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ",
+    "emptyHint1": "ਜ਼ਮੀਨ ਪਾਰਸਲ ਦੀ ਪਛਾਣ ਕਰਕੇ ਇਸਦਾ ULPIN ਬਣਾਉਣ ਲਈ ਨਕਸ਼ੇ ਉੱਤੇ ਕਿਤੇ ਵੀ ਕਲਿੱਕ ਕਰੋ",
+    "emptyHint2": "ULPIN ਰਿਵਰਸ-ਜੀਓਕੋਡਡ ਰਾਜ ਅਤੇ ਜ਼ਿਲ੍ਹਾ ਕੋਡਾਂ ਤੋਂ ਲਿਆ ਜਾਂਦਾ ਹੈ",
+    "selectedLocation": "ਚੁਣਿਆ ਟਿਕਾਣਾ",
+    "latitude": "ਅਕਸ਼ਾਂਸ਼",
+    "longitude": "ਲੰਬਕਾਰ",
+    "geocoding": "ਰਿਵਰਸ ਜੀਓਕੋਡਿੰਗ ਹੋ ਰਹੀ ਹੈ...",
+    "geocodeFailed": "ਰਿਵਰਸ ਜੀਓਕੋਡਿੰਗ ਅਸਫਲ ਰਹੀ। ਆਪਣਾ ਕਨੈਕਸ਼ਨ ਜਾਂਚੋ।",
+    "state": "ਰਾਜ",
+    "district": "ਜ਼ਿਲ੍ਹਾ",
+    "unknown": "ਅਗਿਆਤ",
+    "fullAddress": "ਪੂਰਾ ਪਤਾ",
+    "generatedUlpin": "ਤਿਆਰ ਕੀਤਾ ULPIN",
+    "tapHint": "ULPIN ਅਤੇ GPS ਪਹਿਲਾਂ ਤੋਂ ਭਰੇ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਫਾਰਮ ਨੂੰ ਖੋਲ੍ਹਣ ਲਈ ਹੇਠਾਂ ਟੈਪ ਕਰੋ।",
+    "fillBtn": "ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਫਾਰਮ ਭਰੋ",
+    "attribution": "ਨਕਸ਼ਾ ਡਾਟਾ © OpenStreetMap ਯੋਗਦਾਨੀ। ਜੀਓਕੋਡਿੰਗ Nominatim ਦੁਆਰਾ।"
+  }
+}

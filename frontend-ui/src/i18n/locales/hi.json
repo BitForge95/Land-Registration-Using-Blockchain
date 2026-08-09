@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "भूमि रजिस्ट्री",
+    "dept": "ग्रामीण विकास मंत्रालय",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "संचालन",
+    "register": "भूखंड पंजीकरण",
+    "search": "ULPIN से खोजें",
+    "owner": "मालिक से खोजें",
+    "map": "मानचित्र से खोजें",
+    "transfer": "स्वामित्व हस्तांतरण",
+    "mutate": "म्यूटेशन / विभाजन",
+    "history": "लेखा परीक्षण ट्रेल"
+  },
+  "language": {
+    "label": "भाषा"
+  },
+  "common": {
+    "queryLedger": "लेजर क्वेरी करें"
+  },
+  "search": {
+    "title": "ULPIN से खोजें",
+    "subtitle": "किसी सटीक विशिष्ट भूखंड पहचान संख्या के लिए वर्ल्ड स्टेट क्वेरी करें",
+    "cardTitle": "ULPIN खोज",
+    "placeholder": "उदा. MP-JBP-2026-003",
+    "notFound": "ULPIN के लिए कोई संपत्ति नहीं मिली: {{ulpin}}",
+    "queryFailed": "लेजर क्वेरी विफल: {{message}}"
+  },
+  "owner": {
+    "title": "मालिक से खोजें",
+    "subtitle": "CouchDB रिच क्वेरी — किसी आधार आईडी पर पंजीकृत सभी भूमि संपत्तियां लौटाती है",
+    "cardTitle": "मालिक खोज",
+    "placeholder": "उदा. AADHAR-1122-3344",
+    "queryFailed": "क्वेरी विफल: {{message}}",
+    "noneFound": "इस मालिक आईडी के लिए कोई भूमि संपत्ति नहीं मिली।",
+    "foundCount_one": "{{ownerId}} के नाम पंजीकृत {{count}} संपत्ति मिली",
+    "foundCount_other": "{{ownerId}} के नाम पंजीकृत {{count}} संपत्तियां मिलीं"
+  },
+  "register": {
+    "title": "भूखंड पंजीकृत करें",
+    "subtitle": "Hyperledger Fabric लेजर में एक नई भूमि संपत्ति जमा करें",
+    "cardTitle": "भूखंड पंजीकरण फॉर्म",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "विशिष्ट भूखंड आईडी — लेजर पर पहले से मौजूद नहीं होनी चाहिए",
+    "parentUlpinLabel": "मूल ULPIN",
+    "parentUlpinHint": "मूल (अविभाजित) भूखंड के लिए NONE रहने दें",
+    "gpsLabel": "GPS निर्देशांक *",
+    "ownerLabel": "मालिक आधार आईडी *",
+    "docHashLabel": "दस्तावेज़ हैश (IPFS CID / SHA-256) *",
+    "docHashHint": "भौतिक विलेख दस्तावेज़ का SHA-256 हैश या IPFS CID",
+    "submitting": "लेजर पर सबमिट हो रहा है...",
+    "submitBtn": "लेजर पर पंजीकृत करें",
+    "success": "संपत्ति सफलतापूर्वक पंजीकृत हुई।",
+    "failDefault": "लेन-देन विफल। Spring Boot लॉग जांचें।"
+  },
+  "transfer": {
+    "title": "स्वामित्व हस्तांतरण",
+    "subtitle": "ब्लॉकचेन पर स्वामित्व हस्तांतरण लेन-देन निष्पादित करें",
+    "knownIssue": "<0>ज्ञात बैकएंड समस्या:</0> वर्तमान बैकएंड सेवा चेनकोड को <1>sellerId</1> और <2>newDocumentHash</2> के लिए खाली स्ट्रिंग भेजती है, जिन्हें चेनकोड आवश्यक फ़ील्ड मानकर लेन-देन अस्वीकार कर देता है। यह फ़िक्स आने पर फ़ील्ड आगे भेजने के लिए <3>LandRegistryService.transferOwnership()</3> को अपडेट करें। यह फ़ॉर्म उन्हें फ़िक्स आने के लिए तैयार भेजता है।",
+    "cardTitle": "स्वामित्व हस्तांतरण फॉर्म",
+    "ulpinLabel": "लक्ष्य ULPIN *",
+    "ulpinHint": "हस्तांतरित किया जा रहा भूखंड — ACTIVE होना चाहिए",
+    "sellerLabel": "विक्रेता (वर्तमान मालिक) आधार *",
+    "sellerHint": "लेजर पर मौजूद currentOwnerId से मेल खाना चाहिए",
+    "newOwnerLabel": "नया मालिक आधार *",
+    "newDocHashLabel": "नया दस्तावेज़ हैश *",
+    "newDocHashHint": "स्वामित्व परिवर्तन के बाद अद्यतन विलेख दस्तावेज़ हैश",
+    "executing": "हस्तांतरण निष्पादित हो रहा है...",
+    "submitBtn": "लेजर पर हस्तांतरण निष्पादित करें",
+    "success": "स्वामित्व सफलतापूर्वक हस्तांतरित हुआ।",
+    "failDefault": "हस्तांतरण विफल। विवरण के लिए Spring Boot लॉग जांचें।"
+  },
+  "mutate": {
+    "title": "म्यूटेशन / भूखंड विभाजन",
+    "subtitle": "मूल भूखंड को सेवानिवृत्त कर उससे दो उप-भूखंड बनाएं",
+    "knownIssue": "<0>ज्ञात बैकएंड समस्या:</0> बैकएंड सेवा वर्तमान में चेनकोड के <1>mutateLand</1> फ़ंक्शन को केवल 5 तर्क भेजती है, जबकि इसे 7 चाहिए (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash)। इस एंडपॉइंट का उपयोग करने से पहले सभी 7 पैरामीटर आगे भेजने के लिए <2>LandRegistryService.mutateLand()</2> और <3>MutateRequest</3> DTO को अपडेट करें।",
+    "cardTitle": "भूखंड म्यूटेशन फॉर्म",
+    "parentUlpinLabel": "मूल ULPIN *",
+    "parentUlpinHint": "विभाजित किया जाने वाला भूखंड — इसे RETIRED_MUTATED के रूप में सेवानिवृत्त किया जाएगा",
+    "currentOwnerLabel": "वर्तमान मालिक आधार *",
+    "childALabel": "उप-भूखंड A",
+    "childBLabel": "उप-भूखंड B",
+    "child1UlpinLabel": "उप-भूखंड 1 ULPIN *",
+    "child1GpsLabel": "उप-भूखंड 1 GPS *",
+    "child2UlpinLabel": "उप-भूखंड 2 ULPIN *",
+    "child2GpsLabel": "उप-भूखंड 2 GPS *",
+    "newDocHashLabel": "नया दस्तावेज़ हैश *",
+    "newDocHashHint": "विभाजन दर्शाने वाला अद्यतन सर्वेक्षण विलेख",
+    "executing": "म्यूटेशन निष्पादित हो रहा है...",
+    "submitBtn": "भूखंड विभाजन निष्पादित करें",
+    "failDefault": "म्यूटेशन विफल। विवरण के लिए Spring Boot लॉग जांचें।"
+  },
+  "history": {
+    "title": "अपरिवर्तनीय लेखा परीक्षण ट्रेल",
+    "subtitle": "किसी संपत्ति के लिए क्रिप्टोग्राफ़िक लेजर इतिहास क्वेरी करें।",
+    "ulpinLabel": "संपत्ति ULPIN",
+    "querying": "लेजर क्वेरी हो रही है...",
+    "submitBtn": "उद्भव का पता लगाएं",
+    "failDefault": "ब्लॉकचेन से लेखा परीक्षण ट्रेल प्राप्त करने में विफल।",
+    "ledgerRecords": "लेजर रिकॉर्ड",
+    "txId": "लेन-देन आईडी:",
+    "deleted": "संपत्ति हटाई गई (म्यूटेटेड)",
+    "ownerId": "मालिक आईडी:",
+    "status": "स्थिति:"
+  },
+  "record": {
+    "currentOwner": "वर्तमान मालिक",
+    "gps": "GPS निर्देशांक",
+    "parentUlpin": "मूल ULPIN",
+    "noneRoot": "कोई नहीं (मूल संपत्ति)",
+    "docHash": "दस्तावेज़ हैश (IPFS / SHA-256)",
+    "footer": "अपरिवर्तनीय रिकॉर्ड · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "मानचित्र से खोजें",
+    "subtitle": "इसका ULPIN और GPS निर्देशांक बनाने के लिए किसी स्थान पर क्लिक करें",
+    "emptyHint1": "किसी भूखंड की पहचान कर उसका ULPIN बनाने के लिए मानचित्र पर कहीं भी क्लिक करें",
+    "emptyHint2": "ULPIN रिवर्स-जियोकोडेड राज्य और ज़िला कोड से लिया जाता है",
+    "selectedLocation": "चयनित स्थान",
+    "latitude": "अक्षांश",
+    "longitude": "देशांतर",
+    "geocoding": "रिवर्स जियोकोडिंग हो रही है...",
+    "geocodeFailed": "रिवर्स जियोकोडिंग विफल। अपना कनेक्शन जांचें।",
+    "state": "राज्य",
+    "district": "ज़िला",
+    "unknown": "अज्ञात",
+    "fullAddress": "पूरा पता",
+    "generatedUlpin": "जनरेट किया गया ULPIN",
+    "tapHint": "ULPIN और GPS पहले से भरे हुए पंजीकरण फ़ॉर्म को खोलने के लिए नीचे टैप करें।",
+    "fillBtn": "पंजीकरण फॉर्म भरें",
+    "attribution": "मानचित्र डेटा © OpenStreetMap योगदानकर्ता। जियोकोडिंग Nominatim द्वारा।"
+  }
+}

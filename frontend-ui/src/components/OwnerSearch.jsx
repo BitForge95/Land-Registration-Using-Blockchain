@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getLandByOwner } from '../services/api';
 import LandRecord from './LandRecord';
 
 export default function OwnerSearch() {
+  const { t } = useTranslation();
   const [ownerId, setOwnerId] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
@@ -20,7 +22,7 @@ export default function OwnerSearch() {
       const list = Array.isArray(data) ? data : JSON.parse(data);
       setResults(list);
     } catch (err) {
-      setError(`Query failed: ${err.message}`);
+      setError(t('owner.queryFailed', { message: err.message }));
     } finally {
       setLoading(false);
     }
@@ -29,15 +31,13 @@ export default function OwnerSearch() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Search by Owner</h1>
-        <p className="page-subtitle">
-          CouchDB rich query — returns all land assets registered to an Aadhaar ID
-        </p>
+        <h1 className="page-title">{t('owner.title')}</h1>
+        <p className="page-subtitle">{t('owner.subtitle')}</p>
       </div>
 
       <div className="card">
         <div className="card-title">
-          <span>◈</span> Owner Lookup
+          <span>◈</span> {t('owner.cardTitle')}
         </div>
 
         <form onSubmit={onSearch}>
@@ -46,11 +46,11 @@ export default function OwnerSearch() {
               className="field-input"
               value={ownerId}
               onChange={(e) => setOwnerId(e.target.value)}
-              placeholder="e.g. AADHAR-1122-3344"
+              placeholder={t('owner.placeholder')}
               required
             />
             <button className="btn btn-primary" type="submit" disabled={loading}>
-              {loading ? <span className="spinner" /> : 'Query Ledger'}
+              {loading ? <span className="spinner" /> : t('common.queryLedger')}
             </button>
           </div>
         </form>
@@ -63,13 +63,13 @@ export default function OwnerSearch() {
 
         {results !== null && results.length === 0 && (
           <div className="alert alert-info fade-in" style={{ marginTop: 16 }}>
-            No land assets found for this owner ID.
+            {t('owner.noneFound')}
           </div>
         )}
 
         {results !== null && results.length > 0 && (
           <div className="alert alert-success fade-in" style={{ marginTop: 16 }}>
-            Found {results.length} asset{results.length !== 1 ? 's' : ''} registered to {ownerId}
+            {t('owner.foundCount', { count: results.length, ownerId })}
           </div>
         )}
       </div>
