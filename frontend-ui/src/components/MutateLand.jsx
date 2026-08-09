@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { mutateLand } from '../services/api';
 
 const INITIAL_FORM = {
@@ -12,6 +13,7 @@ const INITIAL_FORM = {
 };
 
 export default function MutateLand() {
+  const { t } = useTranslation();
   const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -38,7 +40,7 @@ export default function MutateLand() {
       setResult(typeof data === 'string' ? data : JSON.stringify(data, null, 2));
       setForm(INITIAL_FORM);
     } catch (err) {
-      setError(err.message || 'Mutation failed. Check Spring Boot logs for details.');
+      setError(err.message || t('mutate.failDefault'));
     } finally {
       setLoading(false);
     }
@@ -47,31 +49,26 @@ export default function MutateLand() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Mutate / Split Parcel</h1>
-        <p className="page-subtitle">
-          Retire a parent parcel and create two child sub-parcels from it
-        </p>
+        <h1 className="page-title">{t('mutate.title')}</h1>
+        <p className="page-subtitle">{t('mutate.subtitle')}</p>
       </div>
 
       <div className="known-issue">
-        <strong>Known Backend Issue:</strong> The backend service currently passes
-        only 5 arguments to the chaincode <code>mutateLand</code> function, which
-        requires 7 (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin,
-        child2Gps, newDocumentHash). Update
-        <code> LandRegistryService.mutateLand()</code> and the
-        <code> MutateRequest</code> DTO to forward all 7 parameters before using this
-        endpoint.
+        <Trans
+          i18nKey="mutate.knownIssue"
+          components={[<strong key="0" />, <code key="1" />, <code key="2" />, <code key="3" />]}
+        />
       </div>
 
       <div className="card">
         <div className="card-title">
-          <span>⊗</span> Parcel Mutation Form
+          <span>⊗</span> {t('mutate.cardTitle')}
         </div>
 
         <form onSubmit={onSubmit} className="form-grid">
           <div className="form-grid form-grid-2">
             <div className="form-field">
-              <label className="field-label">Parent ULPIN *</label>
+              <label className="field-label">{t('mutate.parentUlpinLabel')}</label>
               <input
                 className="field-input mono"
                 name="parentUlpin"
@@ -80,11 +77,11 @@ export default function MutateLand() {
                 placeholder="MP-JBP-2026-003"
                 required
               />
-              <span className="field-hint">Parcel to be split — will be retired as RETIRED_MUTATED</span>
+              <span className="field-hint">{t('mutate.parentUlpinHint')}</span>
             </div>
 
             <div className="form-field">
-              <label className="field-label">Current Owner Aadhaar *</label>
+              <label className="field-label">{t('mutate.currentOwnerLabel')}</label>
               <input
                 className="field-input"
                 name="currentOwnerId"
@@ -114,12 +111,12 @@ export default function MutateLand() {
                 marginBottom: -4,
               }}
             >
-              Child Parcel A
+              {t('mutate.childALabel')}
             </div>
 
             <div className="form-grid form-grid-2">
               <div className="form-field">
-                <label className="field-label">Child 1 ULPIN *</label>
+                <label className="field-label">{t('mutate.child1UlpinLabel')}</label>
                 <input
                   className="field-input mono"
                   name="child1Ulpin"
@@ -131,7 +128,7 @@ export default function MutateLand() {
               </div>
 
               <div className="form-field">
-                <label className="field-label">Child 1 GPS *</label>
+                <label className="field-label">{t('mutate.child1GpsLabel')}</label>
                 <input
                   className="field-input mono"
                   name="child1Gps"
@@ -162,12 +159,12 @@ export default function MutateLand() {
                 marginBottom: -4,
               }}
             >
-              Child Parcel B
+              {t('mutate.childBLabel')}
             </div>
 
             <div className="form-grid form-grid-2">
               <div className="form-field">
-                <label className="field-label">Child 2 ULPIN *</label>
+                <label className="field-label">{t('mutate.child2UlpinLabel')}</label>
                 <input
                   className="field-input mono"
                   name="child2Ulpin"
@@ -179,7 +176,7 @@ export default function MutateLand() {
               </div>
 
               <div className="form-field">
-                <label className="field-label">Child 2 GPS *</label>
+                <label className="field-label">{t('mutate.child2GpsLabel')}</label>
                 <input
                   className="field-input mono"
                   name="child2Gps"
@@ -193,7 +190,7 @@ export default function MutateLand() {
           </div>
 
           <div className="form-field">
-            <label className="field-label">New Document Hash *</label>
+            <label className="field-label">{t('mutate.newDocHashLabel')}</label>
             <input
               className="field-input mono"
               name="newDocumentHash"
@@ -202,7 +199,7 @@ export default function MutateLand() {
               placeholder="QmMutationDeedHash..."
               required
             />
-            <span className="field-hint">Updated survey deed reflecting the split</span>
+            <span className="field-hint">{t('mutate.newDocHashHint')}</span>
           </div>
 
           <button
@@ -212,9 +209,9 @@ export default function MutateLand() {
             style={{ marginTop: 4 }}
           >
             {loading ? (
-              <><span className="spinner" /> Executing Mutation...</>
+              <><span className="spinner" /> {t('mutate.executing')}</>
             ) : (
-              'Execute Parcel Split'
+              t('mutate.submitBtn')
             )}
           </button>
         </form>

@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "भूमी नोंदणी",
+    "dept": "ग्रामीण विकास मंत्रालय",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "कार्ये",
+    "register": "जमीन नोंदणी",
+    "search": "ULPIN ने शोधा",
+    "owner": "मालकाने शोधा",
+    "map": "नकाशाने शोधा",
+    "transfer": "मालकी हस्तांतरण",
+    "mutate": "म्युटेशन / विभाजन",
+    "history": "लेखापरीक्षण मागोवा"
+  },
+  "language": {
+    "label": "भाषा"
+  },
+  "common": {
+    "queryLedger": "लेजर क्वेरी करा"
+  },
+  "search": {
+    "title": "ULPIN ने शोधा",
+    "subtitle": "अचूक विशिष्ट जमीन तुकडा ओळख क्रमांकासाठी वर्ल्ड स्टेट क्वेरी करा",
+    "cardTitle": "ULPIN शोध",
+    "placeholder": "उदा. MP-JBP-2026-003",
+    "notFound": "ULPIN साठी कोणतीही मालमत्ता आढळली नाही: {{ulpin}}",
+    "queryFailed": "लेजर क्वेरी अयशस्वी: {{message}}"
+  },
+  "owner": {
+    "title": "मालकाने शोधा",
+    "subtitle": "CouchDB रिच क्वेरी — आधार आयडीवर नोंदणीकृत सर्व जमीन मालमत्ता परत करते",
+    "cardTitle": "मालक शोध",
+    "placeholder": "उदा. AADHAR-1122-3344",
+    "queryFailed": "क्वेरी अयशस्वी: {{message}}",
+    "noneFound": "या मालक आयडीसाठी कोणतीही जमीन मालमत्ता आढळली नाही.",
+    "foundCount_one": "{{ownerId}} च्या नावे नोंदणीकृत {{count}} मालमत्ता आढळली",
+    "foundCount_other": "{{ownerId}} च्या नावे नोंदणीकृत {{count}} मालमत्ता आढळल्या"
+  },
+  "register": {
+    "title": "जमीन तुकडा नोंदणी करा",
+    "subtitle": "Hyperledger Fabric लेजरमध्ये नवीन जमीन मालमत्ता सादर करा",
+    "cardTitle": "तुकडा नोंदणी फॉर्म",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "विशिष्ट जमीन तुकडा आयडी — लेजरवर आधीच अस्तित्वात नसावा",
+    "parentUlpinLabel": "मूळ ULPIN",
+    "parentUlpinHint": "मूळ (अविभाजित) तुकड्यासाठी NONE ठेवा",
+    "gpsLabel": "GPS निर्देशांक *",
+    "ownerLabel": "मालक आधार आयडी *",
+    "docHashLabel": "दस्तऐवज हॅश (IPFS CID / SHA-256) *",
+    "docHashHint": "प्रत्यक्ष दस्त दस्तऐवजाचा SHA-256 हॅश किंवा IPFS CID",
+    "submitting": "लेजरवर सबमिट होत आहे...",
+    "submitBtn": "लेजरवर नोंदणी करा",
+    "success": "मालमत्ता यशस्वीरित्या नोंदणीकृत झाली.",
+    "failDefault": "व्यवहार अयशस्वी. Spring Boot लॉग तपासा."
+  },
+  "transfer": {
+    "title": "मालकी हस्तांतरण",
+    "subtitle": "ब्लॉकचेनवर मालकी हस्तांतरण व्यवहार अंमलात आणा",
+    "knownIssue": "<0>ज्ञात बॅकएंड समस्या:</0> सध्याची बॅकएंड सेवा चेनकोडला <1>sellerId</1> आणि <2>newDocumentHash</2> साठी रिकाम्या स्ट्रिंग पाठवते, ज्या चेनकोड आवश्यक फील्ड म्हणून तपासून व्यवहार नाकारतो. ही फील्ड पुढे पाठवण्यासाठी <3>LandRegistryService.transferOwnership()</3> अपडेट करा. हा फॉर्म ती दुरुस्ती येईपर्यंत ती फील्ड तयार पाठवतो.",
+    "cardTitle": "मालकी हस्तांतरण फॉर्म",
+    "ulpinLabel": "लक्ष्य ULPIN *",
+    "ulpinHint": "हस्तांतरित होणारा तुकडा — ACTIVE असणे आवश्यक",
+    "sellerLabel": "विक्रेता (सध्याचा मालक) आधार *",
+    "sellerHint": "लेजरवरील currentOwnerId शी जुळणे आवश्यक",
+    "newOwnerLabel": "नवीन मालक आधार *",
+    "newDocHashLabel": "नवीन दस्तऐवज हॅश *",
+    "newDocHashHint": "मालकी बदलानंतर अद्ययावत दस्त दस्तऐवज हॅश",
+    "executing": "हस्तांतरण अंमलात येत आहे...",
+    "submitBtn": "लेजरवर हस्तांतरण अंमलात आणा",
+    "success": "मालकी यशस्वीरित्या हस्तांतरित झाली.",
+    "failDefault": "हस्तांतरण अयशस्वी. तपशीलांसाठी Spring Boot लॉग तपासा."
+  },
+  "mutate": {
+    "title": "म्युटेशन / तुकडा विभाजन",
+    "subtitle": "मूळ तुकडा निवृत्त करून त्यातून दोन उप-तुकडे तयार करा",
+    "knownIssue": "<0>ज्ञात बॅकएंड समस्या:</0> बॅकएंड सेवा सध्या चेनकोडच्या <1>mutateLand</1> फंक्शनला फक्त 5 आर्ग्युमेंट पाठवते, तर त्यास 7 लागतात (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash). हे एंडपॉइंट वापरण्यापूर्वी सर्व 7 पॅरामीटर्स पुढे पाठवण्यासाठी <2>LandRegistryService.mutateLand()</2> आणि <3>MutateRequest</3> DTO अपडेट करा.",
+    "cardTitle": "तुकडा म्युटेशन फॉर्म",
+    "parentUlpinLabel": "मूळ ULPIN *",
+    "parentUlpinHint": "विभाजित होणारा तुकडा — तो RETIRED_MUTATED म्हणून निवृत्त होईल",
+    "currentOwnerLabel": "सध्याचा मालक आधार *",
+    "childALabel": "उप-तुकडा A",
+    "childBLabel": "उप-तुकडा B",
+    "child1UlpinLabel": "उप-तुकडा 1 ULPIN *",
+    "child1GpsLabel": "उप-तुकडा 1 GPS *",
+    "child2UlpinLabel": "उप-तुकडा 2 ULPIN *",
+    "child2GpsLabel": "उप-तुकडा 2 GPS *",
+    "newDocHashLabel": "नवीन दस्तऐवज हॅश *",
+    "newDocHashHint": "विभाजन दर्शवणारे अद्ययावत सर्वेक्षण दस्त",
+    "executing": "म्युटेशन अंमलात येत आहे...",
+    "submitBtn": "तुकडा विभाजन अंमलात आणा",
+    "failDefault": "म्युटेशन अयशस्वी. तपशीलांसाठी Spring Boot लॉग तपासा."
+  },
+  "history": {
+    "title": "अपरिवर्तनीय लेखापरीक्षण मागोवा",
+    "subtitle": "मालमत्तेसाठी क्रिप्टोग्राफिक लेजर इतिहास क्वेरी करा.",
+    "ulpinLabel": "मालमत्ता ULPIN",
+    "querying": "लेजर क्वेरी होत आहे...",
+    "submitBtn": "उगम शोधा",
+    "failDefault": "ब्लॉकचेनवरून लेखापरीक्षण मागोवा आणण्यात अयशस्वी.",
+    "ledgerRecords": "लेजर नोंदी",
+    "txId": "व्यवहार आयडी:",
+    "deleted": "मालमत्ता हटवली (म्युटेटेड)",
+    "ownerId": "मालक आयडी:",
+    "status": "स्थिती:"
+  },
+  "record": {
+    "currentOwner": "सध्याचा मालक",
+    "gps": "GPS निर्देशांक",
+    "parentUlpin": "मूळ ULPIN",
+    "noneRoot": "काहीही नाही (मूळ मालमत्ता)",
+    "docHash": "दस्तऐवज हॅश (IPFS / SHA-256)",
+    "footer": "अपरिवर्तनीय नोंद · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "नकाशाने शोधा",
+    "subtitle": "ULPIN आणि GPS निर्देशांक तयार करण्यासाठी एखाद्या ठिकाणावर क्लिक करा",
+    "emptyHint1": "जमीन तुकडा ओळखून त्याचा ULPIN तयार करण्यासाठी नकाशावर कुठेही क्लिक करा",
+    "emptyHint2": "ULPIN रिव्हर्स-जिओकोडेड राज्य आणि जिल्हा कोडवरून तयार होतो",
+    "selectedLocation": "निवडलेले ठिकाण",
+    "latitude": "अक्षांश",
+    "longitude": "रेखांश",
+    "geocoding": "रिव्हर्स जिओकोडिंग होत आहे...",
+    "geocodeFailed": "रिव्हर्स जिओकोडिंग अयशस्वी. तुमचे कनेक्शन तपासा.",
+    "state": "राज्य",
+    "district": "जिल्हा",
+    "unknown": "अज्ञात",
+    "fullAddress": "पूर्ण पत्ता",
+    "generatedUlpin": "तयार केलेला ULPIN",
+    "tapHint": "ULPIN आणि GPS आधीच भरलेला नोंदणी फॉर्म उघडण्यासाठी खाली टॅप करा.",
+    "fillBtn": "नोंदणी फॉर्म भरा",
+    "attribution": "नकाशा डेटा © OpenStreetMap योगदानकर्ते. जिओकोडिंग Nominatim द्वारे."
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "BHUMI REGISTRY",
+    "dept": "Ministry of Rural Development",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "Operations",
+    "register": "Register Parcel",
+    "search": "Search by ULPIN",
+    "owner": "Search by Owner",
+    "map": "Search by Map",
+    "transfer": "Transfer Ownership",
+    "mutate": "Mutate / Split",
+    "history": "Audit Trail"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "common": {
+    "queryLedger": "Query Ledger"
+  },
+  "search": {
+    "title": "Search by ULPIN",
+    "subtitle": "Query the world state for an exact Unique Land Parcel Identification Number",
+    "cardTitle": "ULPIN Lookup",
+    "placeholder": "e.g. MP-JBP-2026-003",
+    "notFound": "No asset found for ULPIN: {{ulpin}}",
+    "queryFailed": "Ledger query failed: {{message}}"
+  },
+  "owner": {
+    "title": "Search by Owner",
+    "subtitle": "CouchDB rich query — returns all land assets registered to an Aadhaar ID",
+    "cardTitle": "Owner Lookup",
+    "placeholder": "e.g. AADHAR-1122-3344",
+    "queryFailed": "Query failed: {{message}}",
+    "noneFound": "No land assets found for this owner ID.",
+    "foundCount_one": "Found {{count}} asset registered to {{ownerId}}",
+    "foundCount_other": "Found {{count}} assets registered to {{ownerId}}"
+  },
+  "register": {
+    "title": "Register Land Parcel",
+    "subtitle": "Submit a new land asset to the Hyperledger Fabric ledger",
+    "cardTitle": "Parcel Registration Form",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "Unique Land Parcel ID — must not already exist on ledger",
+    "parentUlpinLabel": "Parent ULPIN",
+    "parentUlpinHint": "Leave as NONE for a root (unsplit) parcel",
+    "gpsLabel": "GPS Coordinates *",
+    "ownerLabel": "Owner Aadhaar ID *",
+    "docHashLabel": "Document Hash (IPFS CID / SHA-256) *",
+    "docHashHint": "SHA-256 hash or IPFS CID of the physical deed document",
+    "submitting": "Submitting to Ledger...",
+    "submitBtn": "Register on Ledger",
+    "success": "Asset registered successfully.",
+    "failDefault": "Transaction failed. Check Spring Boot logs."
+  },
+  "transfer": {
+    "title": "Transfer Ownership",
+    "subtitle": "Execute an ownership transfer transaction on the blockchain",
+    "knownIssue": "<0>Known Backend Issue:</0> The current backend service passes empty strings for <1>sellerId</1> and <2>newDocumentHash</2> to the chaincode, which validates both as required fields and rejects the transaction. Update <3>LandRegistryService.transferOwnership()</3> to forward these fields. This form sends them ready for when that fix lands.",
+    "cardTitle": "Ownership Transfer Form",
+    "ulpinLabel": "Target ULPIN *",
+    "ulpinHint": "The parcel being transferred — must be ACTIVE",
+    "sellerLabel": "Seller (Current Owner) Aadhaar *",
+    "sellerHint": "Must match the currentOwnerId on the ledger",
+    "newOwnerLabel": "New Owner Aadhaar *",
+    "newDocHashLabel": "New Document Hash *",
+    "newDocHashHint": "Updated deed document hash after ownership change",
+    "executing": "Executing Transfer...",
+    "submitBtn": "Execute Transfer on Ledger",
+    "success": "Ownership transferred successfully.",
+    "failDefault": "Transfer failed. Check Spring Boot logs for details."
+  },
+  "mutate": {
+    "title": "Mutate / Split Parcel",
+    "subtitle": "Retire a parent parcel and create two child sub-parcels from it",
+    "knownIssue": "<0>Known Backend Issue:</0> The backend service currently passes only 5 arguments to the chaincode <1>mutateLand</1> function, which requires 7 (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash). Update <2>LandRegistryService.mutateLand()</2> and the <3>MutateRequest</3> DTO to forward all 7 parameters before using this endpoint.",
+    "cardTitle": "Parcel Mutation Form",
+    "parentUlpinLabel": "Parent ULPIN *",
+    "parentUlpinHint": "Parcel to be split — will be retired as RETIRED_MUTATED",
+    "currentOwnerLabel": "Current Owner Aadhaar *",
+    "childALabel": "Child Parcel A",
+    "childBLabel": "Child Parcel B",
+    "child1UlpinLabel": "Child 1 ULPIN *",
+    "child1GpsLabel": "Child 1 GPS *",
+    "child2UlpinLabel": "Child 2 ULPIN *",
+    "child2GpsLabel": "Child 2 GPS *",
+    "newDocHashLabel": "New Document Hash *",
+    "newDocHashHint": "Updated survey deed reflecting the split",
+    "executing": "Executing Mutation...",
+    "submitBtn": "Execute Parcel Split",
+    "failDefault": "Mutation failed. Check Spring Boot logs for details."
+  },
+  "history": {
+    "title": "Immutable Audit Trail",
+    "subtitle": "Query the cryptographic ledger history for an asset.",
+    "ulpinLabel": "Asset ULPIN",
+    "querying": "Querying Ledger...",
+    "submitBtn": "Trace Provenance",
+    "failDefault": "Failed to fetch audit trail from the blockchain.",
+    "ledgerRecords": "Ledger Records",
+    "txId": "TxID:",
+    "deleted": "ASSET DELETED (MUTATED)",
+    "ownerId": "Owner ID:",
+    "status": "Status:"
+  },
+  "record": {
+    "currentOwner": "Current Owner",
+    "gps": "GPS Coordinates",
+    "parentUlpin": "Parent ULPIN",
+    "noneRoot": "None (Root Asset)",
+    "docHash": "Document Hash (IPFS / SHA-256)",
+    "footer": "Immutable Record · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "Search by Map",
+    "subtitle": "Click a location to generate its ULPIN and GPS coordinates",
+    "emptyHint1": "Click anywhere on the map to identify a land parcel and generate its ULPIN",
+    "emptyHint2": "ULPIN is derived from reverse-geocoded state and district codes",
+    "selectedLocation": "Selected Location",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "geocoding": "Reverse geocoding...",
+    "geocodeFailed": "Reverse geocoding failed. Check your connection.",
+    "state": "State",
+    "district": "District",
+    "unknown": "Unknown",
+    "fullAddress": "Full Address",
+    "generatedUlpin": "Generated ULPIN",
+    "tapHint": "Tap below to open the Register form with ULPIN and GPS pre-filled.",
+    "fillBtn": "Fill Register Form",
+    "attribution": "Map data © OpenStreetMap contributors. Geocoding by Nominatim."
+  }
+}

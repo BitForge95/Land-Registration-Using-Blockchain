@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { transferOwnership } from '../services/api';
 import LandRecord from './LandRecord';
 
@@ -10,6 +11,7 @@ const INITIAL_FORM = {
 };
 
 export default function TransferLand() {
+  const { t } = useTranslation();
   const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -33,7 +35,7 @@ export default function TransferLand() {
       setResult(data);
       setForm(INITIAL_FORM);
     } catch (err) {
-      setError(err.message || 'Transfer failed. Check Spring Boot logs for details.');
+      setError(err.message || t('transfer.failDefault'));
     } finally {
       setLoading(false);
     }
@@ -42,28 +44,25 @@ export default function TransferLand() {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Transfer Ownership</h1>
-        <p className="page-subtitle">
-          Execute an ownership transfer transaction on the blockchain
-        </p>
+        <h1 className="page-title">{t('transfer.title')}</h1>
+        <p className="page-subtitle">{t('transfer.subtitle')}</p>
       </div>
 
       <div className="known-issue">
-        <strong>Known Backend Issue:</strong> The current backend service passes
-        empty strings for <code>sellerId</code> and <code>newDocumentHash</code> to
-        the chaincode, which validates both as required fields and rejects the
-        transaction. Update <code>LandRegistryService.transferOwnership()</code> to
-        forward these fields. This form sends them ready for when that fix lands.
+        <Trans
+          i18nKey="transfer.knownIssue"
+          components={[<strong key="0" />, <code key="1" />, <code key="2" />, <code key="3" />]}
+        />
       </div>
 
       <div className="card">
         <div className="card-title">
-          <span>⇌</span> Ownership Transfer Form
+          <span>⇌</span> {t('transfer.cardTitle')}
         </div>
 
         <form onSubmit={onSubmit} className="form-grid">
           <div className="form-field">
-            <label className="field-label">Target ULPIN *</label>
+            <label className="field-label">{t('transfer.ulpinLabel')}</label>
             <input
               className="field-input mono"
               name="ulpin"
@@ -72,11 +71,11 @@ export default function TransferLand() {
               placeholder="MP-JBP-2026-003"
               required
             />
-            <span className="field-hint">The parcel being transferred — must be ACTIVE</span>
+            <span className="field-hint">{t('transfer.ulpinHint')}</span>
           </div>
 
           <div className="form-field">
-            <label className="field-label">Seller (Current Owner) Aadhaar *</label>
+            <label className="field-label">{t('transfer.sellerLabel')}</label>
             <input
               className="field-input"
               name="sellerId"
@@ -85,11 +84,11 @@ export default function TransferLand() {
               placeholder="AADHAR-1122-3344"
               required
             />
-            <span className="field-hint">Must match the currentOwnerId on the ledger</span>
+            <span className="field-hint">{t('transfer.sellerHint')}</span>
           </div>
 
           <div className="form-field">
-            <label className="field-label">New Owner Aadhaar *</label>
+            <label className="field-label">{t('transfer.newOwnerLabel')}</label>
             <input
               className="field-input"
               name="newOwnerId"
@@ -101,7 +100,7 @@ export default function TransferLand() {
           </div>
 
           <div className="form-field">
-            <label className="field-label">New Document Hash *</label>
+            <label className="field-label">{t('transfer.newDocHashLabel')}</label>
             <input
               className="field-input mono"
               name="newDocumentHash"
@@ -110,7 +109,7 @@ export default function TransferLand() {
               placeholder="QmNewHashAfterTransfer..."
               required
             />
-            <span className="field-hint">Updated deed document hash after ownership change</span>
+            <span className="field-hint">{t('transfer.newDocHashHint')}</span>
           </div>
 
           <button
@@ -120,16 +119,16 @@ export default function TransferLand() {
             style={{ marginTop: 4 }}
           >
             {loading ? (
-              <><span className="spinner" /> Executing Transfer...</>
+              <><span className="spinner" /> {t('transfer.executing')}</>
             ) : (
-              'Execute Transfer on Ledger'
+              t('transfer.submitBtn')
             )}
           </button>
         </form>
 
         {result && (
           <div className="alert alert-success fade-in" style={{ marginTop: 16 }}>
-            Ownership transferred successfully.
+            {t('transfer.success')}
           </div>
         )}
 

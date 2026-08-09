@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 const CHAIN_ICON = '⬡';
 
 const StatusBadge = ({ status }) => {
@@ -15,6 +17,7 @@ const StatusBadge = ({ status }) => {
  * @param {{ data: object, compact?: boolean }} props
  */
 export default function LandRecord({ data, compact = false }) {
+  const { t } = useTranslation();
   if (!data) return null;
 
   return (
@@ -26,23 +29,23 @@ export default function LandRecord({ data, compact = false }) {
 
       <div className="record-body">
         <div className="record-field">
-          <span className="record-label">Current Owner</span>
+          <span className="record-label">{t('record.currentOwner')}</span>
           <span className="record-value">{data.currentOwnerId}</span>
         </div>
 
         <div className="record-field">
-          <span className="record-label">GPS Coordinates</span>
+          <span className="record-label">{t('record.gps')}</span>
           <span className="record-value mono">{data.gpsCoordinates}</span>
         </div>
 
         <div className="record-field">
-          <span className="record-label">Parent ULPIN</span>
-          <span className="record-value mono">{data.parentUlpin ?? 'None (Root Asset)'}</span>
+          <span className="record-label">{t('record.parentUlpin')}</span>
+          <span className="record-value mono">{data.parentUlpin ?? t('record.noneRoot')}</span>
         </div>
 
         {!compact && (
           <div className="record-field full">
-            <span className="record-label">Document Hash (IPFS / SHA-256)</span>
+            <span className="record-label">{t('record.docHash')}</span>
             <span className="record-value mono">{data.documentHash}</span>
           </div>
         )}
@@ -50,7 +53,7 @@ export default function LandRecord({ data, compact = false }) {
 
       <div className="record-footer">
         <span>{CHAIN_ICON}</span>
-        <span>Immutable Record · Hyperledger Fabric · landchannel</span>
+        <span>{t('record.footer')}</span>
       </div>
     </div>
   );

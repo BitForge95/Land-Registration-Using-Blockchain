@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "ଭୂମି ରେଜିଷ୍ଟ୍ରି",
+    "dept": "ଗ୍ରାମୀଣ ବିକାଶ ମନ୍ତ୍ରଣାଳୟ",
+    "network": "Fabric · landchannel"
+  },
+  "nav": {
+    "section": "କାର୍ଯ୍ୟାବଳୀ",
+    "register": "ଜମି ପଞ୍ଜୀକରଣ",
+    "search": "ULPIN ଦ୍ୱାରା ଖୋଜନ୍ତୁ",
+    "owner": "ମାଲିକଙ୍କ ଦ୍ୱାରା ଖୋଜନ୍ତୁ",
+    "map": "ମାନଚିତ୍ର ଦ୍ୱାରା ଖୋଜନ୍ତୁ",
+    "transfer": "ମାଲିକାନା ସ୍ଥାନାନ୍ତର",
+    "mutate": "ମ୍ୟୁଟେସନ୍ / ବିଭାଜନ",
+    "history": "ଅଡିଟ୍ ଟ୍ରେଲ୍"
+  },
+  "language": {
+    "label": "ଭାଷା"
+  },
+  "common": {
+    "queryLedger": "ଲେଜର୍ କ୍ୱେରୀ କରନ୍ତୁ"
+  },
+  "search": {
+    "title": "ULPIN ଦ୍ୱାରା ଖୋଜନ୍ତୁ",
+    "subtitle": "ଏକ ସଠିକ୍ ଅନନ୍ୟ ଜମି ଖଣ୍ଡ ପରିଚୟ ସଂଖ୍ୟା ପାଇଁ world state କ୍ୱେରୀ କରନ୍ତୁ",
+    "cardTitle": "ULPIN ଖୋଜ",
+    "placeholder": "ଯଥା MP-JBP-2026-003",
+    "notFound": "ULPIN ପାଇଁ କୌଣସି ସମ୍ପତ୍ତି ମିଳିଲା ନାହିଁ: {{ulpin}}",
+    "queryFailed": "ଲେଜର୍ କ୍ୱେରୀ ବିଫଳ ହେଲା: {{message}}"
+  },
+  "owner": {
+    "title": "ମାଲିକଙ୍କ ଦ୍ୱାରା ଖୋଜନ୍ତୁ",
+    "subtitle": "CouchDB ରିଚ୍ କ୍ୱେରୀ — ଏକ ଆଧାର ଆଇଡିରେ ପଞ୍ଜୀକୃତ ସମସ୍ତ ଜମି ସମ୍ପତ୍ତି ଫେରାଏ",
+    "cardTitle": "ମାଲିକ ଖୋଜ",
+    "placeholder": "ଯଥା AADHAR-1122-3344",
+    "queryFailed": "କ୍ୱେରୀ ବିଫଳ ହେଲା: {{message}}",
+    "noneFound": "ଏହି ମାଲିକ ଆଇଡି ପାଇଁ କୌଣସି ଜମି ସମ୍ପତ୍ତି ମିଳିଲା ନାହିଁ।",
+    "foundCount_one": "{{ownerId}} ନାମରେ ପଞ୍ଜୀକୃତ {{count}} ସମ୍ପତ୍ତି ମିଳିଲା",
+    "foundCount_other": "{{ownerId}} ନାମରେ ପଞ୍ଜୀକୃତ {{count}} ସମ୍ପତ୍ତି ମିଳିଲା"
+  },
+  "register": {
+    "title": "ଜମି ଖଣ୍ଡ ପଞ୍ଜୀକରଣ କରନ୍ତୁ",
+    "subtitle": "Hyperledger Fabric ଲେଜରକୁ ଏକ ନୂତନ ଜମି ସମ୍ପତ୍ତି ଦାଖଲ କରନ୍ତୁ",
+    "cardTitle": "ଖଣ୍ଡ ପଞ୍ଜୀକରଣ ଫର୍ମ",
+    "ulpinLabel": "ULPIN *",
+    "ulpinHint": "ଅନନ୍ୟ ଜମି ଖଣ୍ଡ ଆଇଡି — ଲେଜରରେ ପୂର୍ବରୁ ରହିବା ଉଚିତ୍ ନୁହେଁ",
+    "parentUlpinLabel": "ମୂଳ ULPIN",
+    "parentUlpinHint": "ମୂଳ (ଅବିଭକ୍ତ) ଖଣ୍ଡ ପାଇଁ NONE ରଖନ୍ତୁ",
+    "gpsLabel": "GPS ସ୍ଥାନାଙ୍କ *",
+    "ownerLabel": "ମାଲିକ ଆଧାର ଆଇଡି *",
+    "docHashLabel": "ଦଲିଲ ହ୍ୟାସ୍ (IPFS CID / SHA-256) *",
+    "docHashHint": "ଭୌତିକ ଦଲିଲର SHA-256 ହ୍ୟାସ୍ କିମ୍ବା IPFS CID",
+    "submitting": "ଲେଜରକୁ ଦାଖଲ ହେଉଛି...",
+    "submitBtn": "ଲେଜରରେ ପଞ୍ଜୀକରଣ କରନ୍ତୁ",
+    "success": "ସମ୍ପତ୍ତି ସଫଳତାର ସହିତ ପଞ୍ଜୀକୃତ ହେଲା।",
+    "failDefault": "କାରବାର ବିଫଳ ହେଲା। Spring Boot ଲଗ୍ ଯାଞ୍ଚ କରନ୍ତୁ।"
+  },
+  "transfer": {
+    "title": "ମାଲିକାନା ସ୍ଥାନାନ୍ତର",
+    "subtitle": "ବ୍ଲକଚେନ୍ ଉପରେ ମାଲିକାନା ସ୍ଥାନାନ୍ତର କାରବାର ନିଷ୍ପାଦନ କରନ୍ତୁ",
+    "knownIssue": "<0>ଜଣାଶୁଣା ବ୍ୟାକଏଣ୍ଡ ସମସ୍ୟା:</0> ବର୍ତ୍ତମାନର ବ୍ୟାକଏଣ୍ଡ ସେବା ଚେନ୍‌କୋଡ୍‌କୁ <1>sellerId</1> ଏବଂ <2>newDocumentHash</2> ପାଇଁ ଖାଲି ଷ୍ଟ୍ରିଙ୍ଗ ପଠାଏ, ଯାହାକୁ ଚେନ୍‌କୋଡ୍ ବାଧ୍ୟତାମୂଳକ କ୍ଷେତ୍ର ଭାବେ ଯାଞ୍ଚ କରି କାରବାରକୁ ପ୍ରତ୍ୟାଖ୍ୟାନ କରେ। ଏହି କ୍ଷେତ୍ରଗୁଡ଼ିକ ଆଗକୁ ପଠାଇବା ପାଇଁ <3>LandRegistryService.transferOwnership()</3> ଅପଡେଟ୍ କରନ୍ତୁ। ସେହି ସଂଶୋଧନ ନ ଆସିବା ପର୍ଯ୍ୟନ୍ତ ଏହି ଫର୍ମ ସେଗୁଡ଼ିକୁ ପ୍ରସ୍ତୁତ ଅବସ୍ଥାରେ ପଠାଏ।",
+    "cardTitle": "ମାଲିକାନା ସ୍ଥାନାନ୍ତର ଫର୍ମ",
+    "ulpinLabel": "ଲକ୍ଷ୍ୟ ULPIN *",
+    "ulpinHint": "ସ୍ଥାନାନ୍ତରିତ ହେଉଥିବା ଖଣ୍ଡ — ACTIVE ହେବା ଉଚିତ୍",
+    "sellerLabel": "ବିକ୍ରେତା (ବର୍ତ୍ତମାନ ମାଲିକ) ଆଧାର *",
+    "sellerHint": "ଲେଜରର currentOwnerId ସହିତ ମେଳ ଖାଇବା ଉଚିତ୍",
+    "newOwnerLabel": "ନୂତନ ମାଲିକ ଆଧାର *",
+    "newDocHashLabel": "ନୂତନ ଦଲିଲ ହ୍ୟାସ୍ *",
+    "newDocHashHint": "ମାଲିକାନା ପରିବର୍ତ୍ତନ ପରେ ଅପଡେଟ୍ ହୋଇଥିବା ଦଲିଲ ହ୍ୟାସ୍",
+    "executing": "ସ୍ଥାନାନ୍ତର ନିଷ୍ପାଦିତ ହେଉଛି...",
+    "submitBtn": "ଲେଜରରେ ସ୍ଥାନାନ୍ତର ନିଷ୍ପାଦନ କରନ୍ତୁ",
+    "success": "ମାଲିକାନା ସଫଳତାର ସହିତ ସ୍ଥାନାନ୍ତରିତ ହେଲା।",
+    "failDefault": "ସ୍ଥାନାନ୍ତର ବିଫଳ ହେଲା। ବିସ୍ତୃତ ବିବରଣୀ ପାଇଁ Spring Boot ଲଗ୍ ଯାଞ୍ଚ କରନ୍ତୁ।"
+  },
+  "mutate": {
+    "title": "ମ୍ୟୁଟେସନ୍ / ଖଣ୍ଡ ବିଭାଜନ",
+    "subtitle": "ଏକ ମୂଳ ଖଣ୍ଡକୁ ଅବସର ଦେଇ ତାହାରୁ ଦୁଇଟି ଉପ-ଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ",
+    "knownIssue": "<0>ଜଣାଶୁଣା ବ୍ୟାକଏଣ୍ଡ ସମସ୍ୟା:</0> ବ୍ୟାକଏଣ୍ଡ ସେବା ବର୍ତ୍ତମାନ ଚେନ୍‌କୋଡ୍‌ର <1>mutateLand</1> ଫଙ୍ଗସନ୍‌କୁ କେବଳ 5ଟି ଆର୍ଗ୍ୟୁମେଣ୍ଟ ପଠାଏ, ଯେତେବେଳେ ଏହାକୁ 7ଟି ଆବଶ୍ୟକ (parentUlpin, currentOwnerId, child1Ulpin, child1Gps, child2Ulpin, child2Gps, newDocumentHash)। ଏହି endpoint ବ୍ୟବହାର କରିବା ପୂର୍ବରୁ ସମସ୍ତ 7ଟି ପାରାମିଟର ପଠାଇବା ପାଇଁ <2>LandRegistryService.mutateLand()</2> ଏବଂ <3>MutateRequest</3> DTO ଅପଡେଟ୍ କରନ୍ତୁ।",
+    "cardTitle": "ଖଣ୍ଡ ମ୍ୟୁଟେସନ୍ ଫର୍ମ",
+    "parentUlpinLabel": "ମୂଳ ULPIN *",
+    "parentUlpinHint": "ବିଭାଜିତ ହେବାକୁ ଥିବା ଖଣ୍ଡ — ଏହା RETIRED_MUTATED ଭାବେ ଅବସର ନେବ",
+    "currentOwnerLabel": "ବର୍ତ୍ତମାନ ମାଲିକ ଆଧାର *",
+    "childALabel": "ଉପ-ଖଣ୍ଡ A",
+    "childBLabel": "ଉପ-ଖଣ୍ଡ B",
+    "child1UlpinLabel": "ଉପ-ଖଣ୍ଡ 1 ULPIN *",
+    "child1GpsLabel": "ଉପ-ଖଣ୍ଡ 1 GPS *",
+    "child2UlpinLabel": "ଉପ-ଖଣ୍ଡ 2 ULPIN *",
+    "child2GpsLabel": "ଉପ-ଖଣ୍ଡ 2 GPS *",
+    "newDocHashLabel": "ନୂତନ ଦଲିଲ ହ୍ୟାସ୍ *",
+    "newDocHashHint": "ବିଭାଜନକୁ ପ୍ରତିଫଳିତ କରୁଥିବା ଅପଡେଟ୍ ହୋଇଥିବା ସର୍ଭେ ଦଲିଲ",
+    "executing": "ମ୍ୟୁଟେସନ୍ ନିଷ୍ପାଦିତ ହେଉଛି...",
+    "submitBtn": "ଖଣ୍ଡ ବିଭାଜନ ନିଷ୍ପାଦନ କରନ୍ତୁ",
+    "failDefault": "ମ୍ୟୁଟେସନ୍ ବିଫଳ ହେଲା। ବିସ୍ତୃତ ବିବରଣୀ ପାଇଁ Spring Boot ଲଗ୍ ଯାଞ୍ଚ କରନ୍ତୁ।"
+  },
+  "history": {
+    "title": "ଅପରିବର୍ତ୍ତନୀୟ ଅଡିଟ୍ ଟ୍ରେଲ୍",
+    "subtitle": "ଏକ ସମ୍ପତ୍ତି ପାଇଁ କ୍ରିପ୍ଟୋଗ୍ରାଫିକ୍ ଲେଜର୍ ଇତିହାସ କ୍ୱେରୀ କରନ୍ତୁ।",
+    "ulpinLabel": "ସମ୍ପତ୍ତି ULPIN",
+    "querying": "ଲେଜର୍ କ୍ୱେରୀ ହେଉଛି...",
+    "submitBtn": "ମୂଳ ଉତ୍ସ ଅନୁସନ୍ଧାନ କରନ୍ତୁ",
+    "failDefault": "ବ୍ଲକଚେନ୍‌ରୁ ଅଡିଟ୍ ଟ୍ରେଲ୍ ପାଇବାରେ ବିଫଳ।",
+    "ledgerRecords": "ଲେଜର୍ ରେକର୍ଡ",
+    "txId": "କାରବାର ଆଇଡି:",
+    "deleted": "ସମ୍ପତ୍ତି ଅପସାରିତ ହେଲା (ମ୍ୟୁଟେଟେଡ୍)",
+    "ownerId": "ମାଲିକ ଆଇଡି:",
+    "status": "ସ୍ଥିତି:"
+  },
+  "record": {
+    "currentOwner": "ବର୍ତ୍ତମାନ ମାଲିକ",
+    "gps": "GPS ସ୍ଥାନାଙ୍କ",
+    "parentUlpin": "ମୂଳ ULPIN",
+    "noneRoot": "କିଛି ନାହିଁ (ମୂଳ ସମ୍ପତ୍ତି)",
+    "docHash": "ଦଲିଲ ହ୍ୟାସ୍ (IPFS / SHA-256)",
+    "footer": "ଅପରିବର୍ତ୍ତନୀୟ ରେକର୍ଡ · Hyperledger Fabric · landchannel"
+  },
+  "map": {
+    "title": "ମାନଚିତ୍ର ଦ୍ୱାରା ଖୋଜନ୍ତୁ",
+    "subtitle": "ଏହାର ULPIN ଏବଂ GPS ସ୍ଥାନାଙ୍କ ସୃଷ୍ଟି କରିବାକୁ ଏକ ସ୍ଥାନ କ୍ଲିକ୍ କରନ୍ତୁ",
+    "emptyHint1": "ଏକ ଜମି ଖଣ୍ଡକୁ ଚିହ୍ନଟ କରି ତାହାର ULPIN ସୃଷ୍ଟି କରିବାକୁ ମାନଚିତ୍ରରେ ଯେକୌଣସି ସ୍ଥାନରେ କ୍ଲିକ୍ କରନ୍ତୁ",
+    "emptyHint2": "ULPIN ରିଭର୍ସ-ଜିଓକୋଡେଡ୍ ରାଜ୍ୟ ଏବଂ ଜିଲ୍ଲା କୋଡ୍‌ରୁ ପ୍ରାପ୍ତ ହୁଏ",
+    "selectedLocation": "ମନୋନୀତ ସ୍ଥାନ",
+    "latitude": "ଅକ୍ଷାଂଶ",
+    "longitude": "ଦ୍ରାଘିମା",
+    "geocoding": "ରିଭର୍ସ ଜିଓକୋଡିଂ ହେଉଛି...",
+    "geocodeFailed": "ରିଭର୍ସ ଜିଓକୋଡିଂ ବିଫଳ ହେଲା। ଆପଣଙ୍କର ସଂଯୋଗ ଯାଞ୍ଚ କରନ୍ତୁ।",
+    "state": "ରାଜ୍ୟ",
+    "district": "ଜିଲ୍ଲା",
+    "unknown": "ଅଜଣା",
+    "fullAddress": "ସମ୍ପୂର୍ଣ୍ଣ ଠିକଣା",
+    "generatedUlpin": "ସୃଷ୍ଟି ହୋଇଥିବା ULPIN",
+    "tapHint": "ULPIN ଏବଂ GPS ପୂର୍ବରୁ ପୂରଣ ହୋଇଥିବା ପଞ୍ଜୀକରଣ ଫର୍ମ ଖୋଲିବାକୁ ତଳେ ଟ୍ୟାପ୍ କରନ୍ତୁ।",
+    "fillBtn": "ପଞ୍ଜୀକରଣ ଫର୍ମ ପୂରଣ କରନ୍ତୁ",
+    "attribution": "ମାନଚିତ୍ର ତଥ୍ୟ © OpenStreetMap ଅବଦାନକାରୀ। ଜିଓକୋଡିଂ Nominatim ଦ୍ୱାରା।"
+  }
+}
