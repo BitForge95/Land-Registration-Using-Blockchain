@@ -54,10 +54,14 @@ async function reverseGeocode(lat, lng, signal) {
   if (!res.ok) throw new Error(`Geocoding failed (${res.status})`);
   const data = await res.json();
   const addr = data.address || {};
+  // Use country_code (ISO-3166) for stable India detection; normalize case and trim
+  const countryCode = (addr.country_code || '').trim().toLowerCase();
   return {
     state: addr.state || '',
     district: addr.county || addr.state_district || '',
     city: addr.city || addr.town || addr.village || '',
+    country: addr.country || '',
+    countryCode, // ISO-3166 code (e.g., 'in' for India)
     displayName: data.display_name || '',
   };
 }
@@ -76,7 +80,7 @@ export default function MapView({ onNavigateRegister }) {
   const [ulpin, setUlpin] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [isIndia, setIsIndia] = useState(false);
   const pinIcon = useCallback(() => L.divIcon({
     className: '',
     html: `<div style="width:20px;height:20px;background:#0f2d5a;border:3px solid #fff;
@@ -117,7 +121,15 @@ export default function MapView({ onNavigateRegister }) {
         // Discard if a newer click already superseded this one
         if (thisReq !== reqIdRef.current) return;
         setGeocode(geo);
-        setUlpin(generateUlpin(geo, lat, lng));
+        // Use ISO-3166 country code ('in' for India) for stable, localization-independent detection
+        const isIndiaLocation = geo.countryCode === 'in';
+        if (isIndiaLocation) {
+          setIsIndia(true);
+          setUlpin(generateUlpin(geo, lat, lng));
+        } else {
+          setIsIndia(false);
+          setUlpin('');
+        }
       } catch (err) {
         if (err.name === 'AbortError') return; // superseded — silently ignore
         if (thisReq !== reqIdRef.current) return;
@@ -241,12 +253,13 @@ export default function MapView({ onNavigateRegister }) {
                 )}
               </div>
 
-              {ulpin && !loading && (
+              {!loading && geocode && isIndia && (
                 <div className="card" style={{ padding: '16px 18px' }}>
-                  <div className="card-title" style={{ marginBottom: 13 }}>
-                    <span>⊞</span> Generated ULPIN
-                  </div>
+                <div className="card-title" style={{ marginBottom: 13 }}>
+                  <span>⊞</span> Generated ULPIN
+                </div>
 
+                <>
                   <div style={{
                     background: 'var(--navy-pale)',
                     border: '1.5px solid var(--border-active)',
@@ -264,14 +277,28 @@ export default function MapView({ onNavigateRegister }) {
                       {ulpin}
                     </span>
                   </div>
-
-                  <p style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>
+                  
+                  <p style={{ fontSize: 11.5, color: 'var(--text-muted)', marginBottom: 14 }}>
                     Tap below to open the Register form with ULPIN and GPS pre-filled.
                   </p>
-
+                  
                   <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleFillRegister}>
                     Fill Register Form
                   </button>
+                </>
+                </div>
+              )}
+
+              {!loading && geocode && !isIndia && (
+                <div className="card" style={{ padding: '16px 18px' }}>
+                <div className="card-title" style={{ marginBottom: 13 }}>
+                  <span>⊞</span> Location Status
+                </div>
+
+                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  <strong>ULPIN generation is only available for locations within India.</strong><br/>
+                  Please select a location within India to enable ULPIN creation.
+                </p>
                 </div>
               )}
             </>
