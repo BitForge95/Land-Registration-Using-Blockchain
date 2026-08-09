@@ -3,6 +3,11 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+export PATH="$SCRIPT_DIR/bin:$PATH"
+export FABRIC_CFG_PATH="$SCRIPT_DIR/config"
+
 # --- Configuration Variables ---
 CHANNEL_NAME="landchannel"
 CC_NAME="landregistry"
@@ -37,26 +42,36 @@ echo "================================================="
 echo "Starting Chaincode Deployment Lifecycle"
 echo "================================================="
 
-# 0. Create and Join the Channel
-echo "Step 0: Waiting for Raft Leader Election (10s)..."
-sleep 10
-
-echo "Step 0: Creating and Joining the Channel..."
-configtxgen -profile LandChannel -configPath ${PWD} -outputCreateChannelTx ./landchannel.tx -channelID ${CHANNEL_NAME}
-
+# 0. Create and Join the Channel (idempotent: ask the peer whether it has already joined)
 setGlobals 1
-peer channel create \
-  -o ${ORDERER_ADDRESS} \
-  --ordererTLSHostnameOverride orderer0.landregistry.com \
-  -c ${CHANNEL_NAME} \
-  -f ./landchannel.tx \
-  --outputBlock ./landchannel.block \
-  --tls --cafile ${ORDERER_CA}
+CHANNEL_JOINED=$(peer channel list 2>/dev/null | grep -c "^${CHANNEL_NAME}$" || true)
 
-peer channel join -b ./landchannel.block
+if [ "$CHANNEL_JOINED" -gt 0 ]; then
+  echo "Step 0: peer0.org1 already on ${CHANNEL_NAME} — skipping channel creation."
+else
+  # Remove any stale block file from a previous (now-dead) network run
+  rm -f ./landchannel.block ./landchannel.tx
+  echo "Step 0: Waiting for Raft Leader Election (10s)..."
+  sleep 10
 
-setGlobals 2
-peer channel join -b ./landchannel.block
+  echo "Step 0: Creating and Joining the Channel..."
+  configtxgen -profile LandChannel -configPath ${PWD} -outputCreateChannelTx ./landchannel.tx -channelID ${CHANNEL_NAME}
+
+  setGlobals 1
+  peer channel create \
+    -o ${ORDERER_ADDRESS} \
+    --ordererTLSHostnameOverride orderer0.landregistry.com \
+    -c ${CHANNEL_NAME} \
+    -f ./landchannel.tx \
+    --outputBlock ./landchannel.block \
+    --tls --cafile ${ORDERER_CA}
+
+  setGlobals 1
+  peer channel join -b ./landchannel.block
+
+  setGlobals 2
+  peer channel join -b ./landchannel.block
+fi
 
 # 1. Package the Java Chaincode
 echo "Step 1: Packaging the Java Chaincode..."

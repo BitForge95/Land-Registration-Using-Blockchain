@@ -247,21 +247,21 @@ public final class LandRegistryContract implements ContractInterface {
                 newDocumentHash,
                 "RETIRED_MUTATED"
         );
-        ctx.getStub().putStringState(parentUlpin, genson.serialize(retiredParent));
+        ctx.getStub().putStringState(normalizedParentUlpin, genson.serialize(retiredParent));
 
         LandAsset child1 = new LandAsset(
-                child1Ulpin, child1Gps, parentUlpin,
+                normalizedChild1Ulpin, child1Gps, normalizedParentUlpin,
                 currentOwnerId, newDocumentHash, "ACTIVE"
         );
-        ctx.getStub().putStringState(child1Ulpin, genson.serialize(child1));
+        ctx.getStub().putStringState(normalizedChild1Ulpin, genson.serialize(child1));
 
         LandAsset child2 = new LandAsset(
-                child2Ulpin, child2Gps, parentUlpin,
+                normalizedChild2Ulpin, child2Gps, normalizedParentUlpin,
                 currentOwnerId, newDocumentHash, "ACTIVE"
         );
-        ctx.getStub().putStringState(child2Ulpin, genson.serialize(child2));
+        ctx.getStub().putStringState(normalizedChild2Ulpin, genson.serialize(child2));
 
-        return String.format("Successfully mutated %s into %s and %s", parentUlpin, child1Ulpin, child2Ulpin);
+        return String.format("Successfully mutated %s into %s and %s", normalizedParentUlpin, normalizedChild1Ulpin, normalizedChild2Ulpin);
     }
 
     /**
@@ -351,17 +351,20 @@ public final class LandRegistryContract implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String getAssetHistory(final Context ctx, final String ulpin) {
         ChaincodeStub stub = ctx.getStub();
-        QueryResultsIterator<KeyModification> history = stub.getHistoryForKey(ulpin);
-
         List<String> historyList = new ArrayList<>();
 
-        for (KeyModification modification : history) {
-            String record = String.format("{\"txId\":\"%s\", \"value\":%s, \"timestamp\":\"%s\", \"isDeleted\":%b}",
-                    modification.getTxId(),
-                    modification.getStringValue(),
-                    modification.getTimestamp().toString(),
-                    modification.isDeleted());
-            historyList.add(record);
+        try (QueryResultsIterator<KeyModification> history = stub.getHistoryForKey(ulpin)) {
+            for (KeyModification modification : history) {
+                String record = String.format("{\"txId\":\"%s\", \"value\":%s, \"timestamp\":\"%s\", \"isDeleted\":%b}",
+                        modification.getTxId(),
+                        modification.getStringValue(),
+                        modification.getTimestamp().toString(),
+                        modification.isDeleted());
+                historyList.add(record);
+            }
+        } catch (Exception e) {
+            throw new ChaincodeException("Failed to retrieve history for ULPIN: " + ulpin,
+                    LandRegistryErrors.QUERY_FAILED.toString());
         }
 
         return "[" + String.join(",", historyList) + "]";
