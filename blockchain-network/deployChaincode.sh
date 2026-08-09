@@ -42,10 +42,15 @@ echo "================================================="
 echo "Starting Chaincode Deployment Lifecycle"
 echo "================================================="
 
-# 0. Create and Join the Channel (idempotent: skipped if landchannel.block already exists)
-if [ -f "./landchannel.block" ]; then
-  echo "Step 0: landchannel.block already exists — channel already created. Skipping."
+# 0. Create and Join the Channel (idempotent: ask the peer whether it has already joined)
+setGlobals 1
+CHANNEL_JOINED=$(peer channel list 2>/dev/null | grep -c "^${CHANNEL_NAME}$" || true)
+
+if [ "$CHANNEL_JOINED" -gt 0 ]; then
+  echo "Step 0: peer0.org1 already on ${CHANNEL_NAME} — skipping channel creation."
 else
+  # Remove any stale block file from a previous (now-dead) network run
+  rm -f ./landchannel.block ./landchannel.tx
   echo "Step 0: Waiting for Raft Leader Election (10s)..."
   sleep 10
 
