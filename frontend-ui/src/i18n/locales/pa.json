@@ -17,6 +17,37 @@
   "language": {
     "label": "ਭਾਸ਼ਾ"
   },
+  "auth": {
+    "signInTab": "ਸਾਈਨ ਇਨ",
+    "signUpTab": "ਖਾਤਾ ਬਣਾਓ",
+    "signInTitle": "ਸਾਈਨ ਇਨ ਕਰੋ",
+    "signInSubtitle": "ਆਪਣੇ ਖਾਤੇ ਨਾਲ ਜ਼ਮੀਨ ਰਜਿਸਟਰੀ ਤੱਕ ਪਹੁੰਚ ਕਰੋ",
+    "signUpTitle": "ਨਾਗਰਿਕ ਖਾਤਾ ਬਣਾਓ",
+    "signUpSubtitle": "ਜ਼ਮੀਨ ਦੇ ਟੁਕੜੇ ਅਤੇ ਉਹਨਾਂ ਦਾ ਆਡਿਟ ਟ੍ਰੇਲ ਵੇਖਣ ਲਈ ਰਜਿਸਟਰ ਕਰੋ",
+    "usernameLabel": "ਵਰਤੋਂਕਾਰ ਨਾਮ",
+    "usernameHint": "3–32 ਅੱਖਰ — ਅੱਖਰ, ਅੰਕ, ਬਿੰਦੂ, ਅੰਡਰਸਕੋਰ ਜਾਂ ਹਾਈਫਨ",
+    "passwordLabel": "ਪਾਸਵਰਡ",
+    "passwordHint": "ਘੱਟੋ-ਘੱਟ {{count}} ਅੱਖਰ",
+    "confirmPasswordLabel": "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+    "signInBtn": "ਸਾਈਨ ਇਨ",
+    "signingIn": "ਸਾਈਨ ਇਨ ਹੋ ਰਿਹਾ ਹੈ...",
+    "signUpBtn": "ਖਾਤਾ ਬਣਾਓ",
+    "signingUp": "ਖਾਤਾ ਬਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ...",
+    "signOut": "ਸਾਈਨ ਆਊਟ",
+    "roleAdmin": "ਅਧਿਕਾਰੀ",
+    "roleUser": "ਨਾਗਰਿਕ",
+    "citizenOnlyNote": "ਇੱਥੇ ਬਣਾਏ ਖਾਤੇ ਨਾਗਰਿਕ ਖਾਤੇ ਹਨ। ਅਧਿਕਾਰੀ ਖਾਤੇ ਵਿਭਾਗ ਵੱਲੋਂ ਜਾਰੀ ਕੀਤੇ ਜਾਂਦੇ ਹਨ।",
+    "demoCredentials": "ਡੈਮੋ ਕ੍ਰੈਡੈਂਸ਼ੀਅਲ:",
+    "errors": {
+      "required": "ਵਰਤੋਂਕਾਰ ਨਾਮ ਅਤੇ ਪਾਸਵਰਡ ਲੋੜੀਂਦੇ ਹਨ।",
+      "usernameLength": "ਵਰਤੋਂਕਾਰ ਨਾਮ 3 ਤੋਂ 32 ਅੱਖਰਾਂ ਵਿਚਕਾਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+      "usernameInvalid": "ਵਰਤੋਂਕਾਰ ਨਾਮ ਵਿੱਚ ਸਿਰਫ਼ ਅੱਖਰ, ਅੰਕ, ਬਿੰਦੂ, ਅੰਡਰਸਕੋਰ ਅਤੇ ਹਾਈਫਨ ਹੋ ਸਕਦੇ ਹਨ।",
+      "passwordTooShort": "ਪਾਸਵਰਡ ਘੱਟੋ-ਘੱਟ 8 ਅੱਖਰਾਂ ਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+      "passwordMismatch": "ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।",
+      "usernameTaken": "ਉਹ ਵਰਤੋਂਕਾਰ ਨਾਮ ਪਹਿਲਾਂ ਹੀ ਲਿਆ ਜਾ ਚੁੱਕਾ ਹੈ।",
+      "invalidCredentials": "ਗਲਤ ਵਰਤੋਂਕਾਰ ਨਾਮ ਜਾਂ ਪਾਸਵਰਡ।"
+    }
+  },
   "common": {
     "queryLedger": "ਲੈਜਰ ਕਿਊਰੀ ਕਰੋ"
   },

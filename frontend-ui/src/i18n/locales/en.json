@@ -17,6 +17,37 @@
   "language": {
     "label": "Language"
   },
+  "auth": {
+    "signInTab": "Sign In",
+    "signUpTab": "Create Account",
+    "signInTitle": "Sign in",
+    "signInSubtitle": "Access the land registry with your account",
+    "signUpTitle": "Create a citizen account",
+    "signUpSubtitle": "Register to look up land parcels and their audit trail",
+    "usernameLabel": "Username",
+    "usernameHint": "3–32 characters — letters, digits, dots, underscores or hyphens",
+    "passwordLabel": "Password",
+    "passwordHint": "At least {{count}} characters",
+    "confirmPasswordLabel": "Confirm Password",
+    "signInBtn": "Sign In",
+    "signingIn": "Signing in...",
+    "signUpBtn": "Create Account",
+    "signingUp": "Creating account...",
+    "signOut": "Sign out",
+    "roleAdmin": "Official",
+    "roleUser": "Citizen",
+    "citizenOnlyNote": "Accounts created here are citizen accounts. Official accounts are issued by the department.",
+    "demoCredentials": "Demo credentials:",
+    "errors": {
+      "required": "Username and password are required.",
+      "usernameLength": "Username must be between 3 and 32 characters.",
+      "usernameInvalid": "Username may only contain letters, digits, dots, underscores and hyphens.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords do not match.",
+      "usernameTaken": "That username is already taken.",
+      "invalidCredentials": "Invalid username or password."
+    }
+  },
   "common": {
     "queryLedger": "Query Ledger"
   },
