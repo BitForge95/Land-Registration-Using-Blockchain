@@ -281,13 +281,19 @@ export default function MapView({ onNavigateRegister }) {
                     </span>
                   </div>
 
-                  <p style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>
-                    {t('map.tapHint')}
-                  </p>
-                  
-                  <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleFillRegister}>
-                    {t('map.fillBtn')}
-                  </button>
+                  {/* Registration is an official-only operation, so citizens see the
+                      generated ULPIN but not the shortcut into the register form. */}
+                  {onNavigateRegister && (
+                    <>
+                      <p style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>
+                        {t('map.tapHint')}
+                      </p>
+
+                      <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleFillRegister}>
+                        {t('map.fillBtn')}
+                      </button>
+                    </>
+                  )}
                 </>
                 </div>
               )}

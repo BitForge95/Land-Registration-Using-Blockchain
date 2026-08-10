@@ -17,6 +17,37 @@
   "language": {
     "label": "زبان"
   },
+  "auth": {
+    "signInTab": "سائن ان",
+    "signUpTab": "اکاؤنٹ بنائیں",
+    "signInTitle": "سائن ان کریں",
+    "signInSubtitle": "اپنے اکاؤنٹ سے زمین کے رجسٹر تک رسائی حاصل کریں",
+    "signUpTitle": "شہری اکاؤنٹ بنائیں",
+    "signUpSubtitle": "زمین کے قطعات اور ان کا آڈٹ ٹریل دیکھنے کے لیے رجسٹر کریں",
+    "usernameLabel": "صارف نام",
+    "usernameHint": "3–32 حروف — حروف، ہندسے، نقطے، انڈر سکور یا ہائفن",
+    "passwordLabel": "پاس ورڈ",
+    "passwordHint": "کم از کم {{count}} حروف",
+    "confirmPasswordLabel": "پاس ورڈ کی تصدیق کریں",
+    "signInBtn": "سائن ان",
+    "signingIn": "سائن ان ہو رہا ہے...",
+    "signUpBtn": "اکاؤنٹ بنائیں",
+    "signingUp": "اکاؤنٹ بنایا جا رہا ہے...",
+    "signOut": "سائن آؤٹ",
+    "roleAdmin": "افسر",
+    "roleUser": "شہری",
+    "citizenOnlyNote": "یہاں بنائے گئے اکاؤنٹ شہری اکاؤنٹ ہیں۔ افسر کے اکاؤنٹ محکمہ جاری کرتا ہے۔",
+    "demoCredentials": "ڈیمو اسناد:",
+    "errors": {
+      "required": "صارف نام اور پاس ورڈ ضروری ہیں۔",
+      "usernameLength": "صارف نام 3 سے 32 حروف کے درمیان ہونا چاہیے۔",
+      "usernameInvalid": "صارف نام میں صرف حروف، ہندسے، نقطے، انڈر سکور اور ہائفن ہو سکتے ہیں۔",
+      "passwordTooShort": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے۔",
+      "passwordMismatch": "پاس ورڈ آپس میں نہیں ملتے۔",
+      "usernameTaken": "یہ صارف نام پہلے سے لیا جا چکا ہے۔",
+      "invalidCredentials": "غلط صارف نام یا پاس ورڈ۔"
+    }
+  },
   "common": {
     "queryLedger": "لیجر سے استفسار کریں"
   },

@@ -167,6 +167,60 @@ body::before {
   gap: 10px;
 }
 
+/* ---- SIGNED-IN USER (sidebar footer) ---- */
+.user-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.user-chip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.user-chip-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-badge {
+  align-self: flex-start;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.role-badge-admin { background: rgba(255,153,51,0.18); color: #ffc285; border: 1px solid rgba(255,153,51,0.35); }
+.role-badge-user  { background: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.18); }
+
+.btn-ghost {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.7);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-ghost:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.4); }
+
 .language-switcher {
   display: flex;
   align-items: center;
@@ -461,6 +515,116 @@ body::before {
 /* ---- RECORDS LIST ---- */
 .records-list { display: grid; gap: 12px; }
 
+/* ---- AUTH SCREEN ---- */
+.auth-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.auth-panel {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(9,31,64,0.11);
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px 18px;
+  background: var(--navy);
+}
+
+.auth-brand .logo-emblem { margin-bottom: 0; }
+
+.auth-brand-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.auth-brand-dept {
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.02em;
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-raised);
+}
+
+.auth-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 12px 10px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.auth-tab:hover  { color: var(--text-secondary); }
+.auth-tab.active { color: var(--navy); border-bottom-color: var(--navy); background: var(--bg-surface); }
+
+.auth-body { padding: 22px 24px 20px; }
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.auth-subtitle {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.auth-note {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-subtle);
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.auth-note code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--text-secondary);
+}
+
+.auth-footer {
+  padding: 12px 24px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--navy);
+}
+
 /* ---- SCROLLBAR ---- */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
@@ -477,4 +641,11 @@ body::before {
   .main-content { padding: 20px 16px; }
   .form-grid-2  { grid-template-columns: 1fr; }
   .record-body  { grid-template-columns: 1fr; }
+
+  /* The sidebar collapses to icons on mobile, but the auth screen has no
+     sidebar -- keep its language picker and user chip usable. */
+  .auth-footer .language-switcher { display: flex; }
+  .user-chip { flex-direction: column; align-items: stretch; gap: 6px; }
+  .user-chip-name { text-align: center; }
+  .role-badge { align-self: center; }
 }
